@@ -43,7 +43,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 ),
                 const SizedBox(height: 8),
                 const SizedBox(
-                  height: 200,
+                  height: 150,
                   child: HomeBannerSlider2(),
                 ),
                 const SizedBox(height: 0),

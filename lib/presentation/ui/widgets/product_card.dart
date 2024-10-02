@@ -3,11 +3,11 @@ import 'package:crafty_bay_app/presentation/ui/screen/Products_details_screen.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../utils/app_color.dart';
-import '../utils/assets_path.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
-    super.key, required this.products,
+    super.key,
+    required this.products,
   });
 
   final ProductModel products;
@@ -34,10 +34,9 @@ class ProductCard extends StatelessWidget {
                       topRight: Radius.circular(8),
                     ),
                     color: AppColors.themeColor.withOpacity(0.1),
-                    image: const DecorationImage(
-                      image: AssetImage(AssetsPath.shoe1),
-                      fit: BoxFit.scaleDown,
-                    )),
+                    image: DecorationImage(
+                        image: NetworkImage(products.image ?? ''),
+                        fit: BoxFit.fill)),
               ),
             ),
             Padding(
@@ -45,7 +44,7 @@ class ProductCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                   Text(
+                  Text(
                     products.title ?? '',
                     maxLines: 1,
                     style: const TextStyle(

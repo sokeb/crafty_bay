@@ -26,14 +26,16 @@ class CategoriesCard extends StatelessWidget {
                 ));
           },
           child: Container(
+            height: 80,
+            width: 80,
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: AppColors.themeColor.withOpacity(0.1)),
-            child: const Icon(
-              Icons.computer,
-              size: 55,
-              color: AppColors.themeColor,
+                color: AppColors.themeColor.withOpacity(0.1),
+                image: DecorationImage(image: NetworkImage(categories.categoryImg?? ''),
+                    fit: BoxFit.fill
+                )
+
             ),
           ),
         ),

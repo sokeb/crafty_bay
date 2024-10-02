@@ -2,7 +2,6 @@ import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../state_holder/slider_list_controller.dart';
-import '../../utils/assets_path.dart';
 import '../loading_widget.dart';
 
 class HomeBannerSlider2 extends StatefulWidget {
@@ -60,20 +59,24 @@ class _HomeBannerSlider2State extends State<HomeBannerSlider2> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: AppColors.themeColor,
+                image: DecorationImage(image: NetworkImage(
+                    sliderListController.sliders[index].image ?? ''),
+                  fit: BoxFit.fill
+                )
               ),
-              child: Row(
-                children: [
-                  const Expanded(
-                      child: Image(image: AssetImage(AssetsPath.shoe1))),
-                  Expanded(
-                      child: Column(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: SizedBox(
+                  height: 150,
+                  width: 150,
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         sliderListController.sliders[index].price ?? '',
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: Colors.white,
+                              color: AppColors.themeColor,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -92,8 +95,8 @@ class _HomeBannerSlider2State extends State<HomeBannerSlider2> {
                         ),
                       )
                     ],
-                  ))
-                ],
+                  ),
+                ),
               ),
             ),
           );
