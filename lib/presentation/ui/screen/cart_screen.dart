@@ -41,9 +41,8 @@ class _CartScreenState extends State<CartScreen> {
                         color: Colors.white,
                         elevation: 1,
                         child: SizedBox(
-                          height: 100,
-                          //width: MediaQuery.sizeOf(context).width - 32,
-                          width: 32,
+                          height: 120,
+                          width: MediaQuery.sizeOf(context).width - 32,
                           child: Row(
                             children: [
                               Expanded(
@@ -107,13 +106,15 @@ class _CartScreenState extends State<CartScreen> {
                                             onPressed: () {},
                                             icon: const Icon(
                                                 Icons.delete_outline)),
-                                        ItemCount(
-                                          color: AppColors.themeColor,
-                                          initialValue: 1,
-                                          minValue: 1,
-                                          maxValue: 5,
-                                          decimalPlaces: 0,
-                                          onChanged: (value) {},
+                                        FittedBox(
+                                          child: ItemCount(
+                                            color: AppColors.themeColor,
+                                            initialValue: 1,
+                                            minValue: 1,
+                                            maxValue: 5,
+                                            decimalPlaces: 0,
+                                            onChanged: (value) {},
+                                          ),
                                         ),
                                       ],
                                     ),

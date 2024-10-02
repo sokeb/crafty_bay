@@ -19,10 +19,7 @@ class CategoriesCard extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            Get.to(() => ProductListScreen(
-                  title: categories.categoryName ?? '',
-                  productList: [],
-                ));
+            Get.to(() => ProductListScreen(category: categories,));
           },
           child: Container(
             height: 80,
