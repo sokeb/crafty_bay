@@ -1,0 +1,122 @@
+import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../state_holder/slider_list_controller.dart';
+import '../../utils/assets_path.dart';
+import '../loading_widget.dart';
+
+class HomeBannerSlider2 extends StatefulWidget {
+  const HomeBannerSlider2({super.key});
+
+  @override
+  State<HomeBannerSlider2> createState() => _HomeBannerSlider2State();
+}
+
+class _HomeBannerSlider2State extends State<HomeBannerSlider2> {
+  final PageController _pageController = PageController();
+  int _currentIndex = 0;
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GetBuilder<SliderListController>(builder: (sliderListController) {
+        return Visibility(
+          visible: !sliderListController.inProgress,
+          replacement: const LoadingIndicator(),
+          child: Column(
+            children: [
+              buildSliderPage(sliderListController),
+              const SizedBox(
+                height: 6,
+              ),
+              buildSliderIndicator(sliderListController),
+            ],
+          ),
+        );
+      }),
+    );
+  }
+
+  Widget buildSliderPage(SliderListController sliderListController) {
+    return Expanded(
+      child: PageView.builder(
+        controller: _pageController,
+        onPageChanged: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        itemCount: sliderListController.sliders.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(right: 5, left: 5),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: AppColors.themeColor,
+              ),
+              child: Row(
+                children: [
+                  const Expanded(
+                      child: Image(image: AssetImage(AssetsPath.shoe1))),
+                  Expanded(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        sliderListController.sliders[index].price ?? '',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      SizedBox(
+                        width: 100,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: AppColors.themeColor,
+                          ),
+                          onPressed: () {},
+                          child: const Text('Buy Now'),
+                        ),
+                      )
+                    ],
+                  ))
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Row buildSliderIndicator(SliderListController sliderListController) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(sliderListController.sliders.length, (index) {
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          margin: const EdgeInsets.symmetric(horizontal: 4.0),
+          width: _currentIndex == index ? 12.0 : 8.0,
+          height: _currentIndex == index ? 12.0 : 8.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: _currentIndex == index ? AppColors.themeColor : Colors.grey,
+          ),
+        );
+      }),
+    );
+  }
+}
