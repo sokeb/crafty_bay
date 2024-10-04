@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,10 +15,36 @@ class HomeBannerSlider2 extends StatefulWidget {
 class _HomeBannerSlider2State extends State<HomeBannerSlider2> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
+  Timer? _timer;
+
+
+  @override
+  void initState() {
+    super.initState();
+    int x = Get.find<SliderListController>().sliders.length;
+    _startAutoSlide(x);
+  }
+
+  void _startAutoSlide(int listLength) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      if (_currentIndex < listLength+2) {
+        _currentIndex++;
+      } else {
+        _currentIndex = 0;
+      }
+
+      _pageController.animateToPage(
+        _currentIndex,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
 
   @override
   void dispose() {
     _pageController.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 

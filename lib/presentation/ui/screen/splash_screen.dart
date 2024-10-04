@@ -1,4 +1,3 @@
-import 'package:crafty_bay_app/presentation/ui/screen/email_verification_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/main_bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
