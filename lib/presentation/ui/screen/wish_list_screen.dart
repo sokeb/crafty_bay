@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import '../../state_holder/bottom_navbar_controller.dart';
 import '../utils/app_color.dart';
 import '../utils/assets_path.dart';
-import 'Products_details_screen.dart';
 
 class WishListScreen extends StatefulWidget {
   const WishListScreen({super.key});
@@ -47,9 +46,9 @@ class _WishListScreenState extends State<WishListScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              Get.to(() => const ProductsDetailsScreen());
-                            },
+                            // onTap: () {
+                            //   Get.to(() => const ProductsDetailsScreen( ));
+                            // },
                             child: Container(
                               height: 100,
                               width: MediaQuery.sizeOf(context).width,
@@ -103,7 +102,7 @@ class _WishListScreenState extends State<WishListScreen> {
                                       ],
                                     ),
                                     InkWell(
-                                      onTap: (){},
+                                      onTap: () {},
                                       child: Card(
                                         color: AppColors.themeColor,
                                         shape: RoundedRectangleBorder(

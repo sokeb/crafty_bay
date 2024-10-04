@@ -23,7 +23,9 @@ class ProductCard extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Get.to(() => const ProductsDetailsScreen());
+                Get.to(() => ProductsDetailsScreen(
+                      productId: products.id!,
+                    ));
               },
               child: Container(
                 height: 100,

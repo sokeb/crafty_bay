@@ -2,8 +2,11 @@ import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:flutter/material.dart';
 
 class BuiltSizeSelectSection extends StatefulWidget {
-  const BuiltSizeSelectSection(
-      {super.key, required this.sizes, required this.onSelectedSize});
+  const BuiltSizeSelectSection({
+    super.key,
+    required this.sizes,
+    required this.onSelectedSize,
+  });
 
   final List<String> sizes;
   final Function(Color) onSelectedSize;
@@ -39,13 +42,23 @@ class _BuiltSizeSelectSectionState extends State<BuiltSizeSelectSection> {
                   child: Container(
                     padding: const EdgeInsets.all(2.0),
                     decoration: BoxDecoration(
-                      color: _selectedSize == item ?AppColors.themeColor :Colors.black54, // Border color
+                      color: _selectedSize == item
+                          ? AppColors.themeColor
+                          : Colors.black54, // Border color
                       shape: BoxShape.circle,
                     ),
                     child: CircleAvatar(
-                      backgroundColor: _selectedSize == item ?AppColors.themeColor : Colors.white,
+                      backgroundColor: _selectedSize == item
+                          ? AppColors.themeColor
+                          : Colors.white,
                       radius: 16.0,
-                      child: Text(item, style:  TextStyle(color: _selectedSize == item ?Colors.white : Colors.black54),),
+                      child: Text(
+                        item,
+                        style: TextStyle(
+                            color: _selectedSize == item
+                                ? Colors.white
+                                : Colors.black54),
+                      ),
                     ),
                   ),
                 );

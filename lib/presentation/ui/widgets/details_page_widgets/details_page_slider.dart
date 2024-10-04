@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../../utils/assets_path.dart';
-
 class DetailsPageSlider extends StatefulWidget {
-  const DetailsPageSlider({super.key});
+  const DetailsPageSlider({super.key, required this.sliderImgUrls});
+
+  final List<String> sliderImgUrls;
 
   @override
   State<DetailsPageSlider> createState() => _DetailsPageSliderState();
@@ -12,17 +13,28 @@ class DetailsPageSlider extends StatefulWidget {
 class _DetailsPageSliderState extends State<DetailsPageSlider> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
-
-  final List<String> imgList = [
-    'https://via.placeholder.com/600x400.png?text=Slide+1',
-    'https://via.placeholder.com/600x400.png?text=Slide+2',
-    'https://via.placeholder.com/600x400.png?text=Slide+3',
-  ];
+  Timer? _timer;
 
   @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _startAutoSlide(widget.sliderImgUrls.length);
+  }
+
+  void _startAutoSlide(int listLength) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      if (_currentIndex < listLength - 1) {
+        _currentIndex++;
+      } else {
+        _currentIndex = 0;
+      }
+
+      _pageController.animateToPage(
+        _currentIndex,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
   @override
@@ -39,14 +51,13 @@ class _DetailsPageSliderState extends State<DetailsPageSlider> {
                   _currentIndex = index;
                 });
               },
-              itemCount: imgList.length,
+              itemCount: widget.sliderImgUrls.length,
               itemBuilder: (context, index) {
                 return Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    image: const DecorationImage(
-                      image: AssetImage(AssetsPath.shoe1),
-                      fit: BoxFit.scaleDown,
+                    image: DecorationImage(
+                      image: NetworkImage(widget.sliderImgUrls[index]),
+                      fit: BoxFit.fill,
                     ),
                   ),
                 );
@@ -56,10 +67,9 @@ class _DetailsPageSliderState extends State<DetailsPageSlider> {
               bottom: 10,
               left: 0,
               right: 0,
-
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(imgList.length, (index) {
+                children: List.generate(widget.sliderImgUrls.length, (index) {
                   return AnimatedContainer(
                     duration: const Duration(milliseconds: 300),
                     margin: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -67,7 +77,9 @@ class _DetailsPageSliderState extends State<DetailsPageSlider> {
                     height: _currentIndex == index ? 12.0 : 8.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: _currentIndex == index ? Colors.blueAccent : Colors.grey,
+                      color: _currentIndex == index
+                          ? Colors.blueAccent
+                          : Colors.grey,
                     ),
                   );
                 }),
@@ -77,5 +89,12 @@ class _DetailsPageSliderState extends State<DetailsPageSlider> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel();
+    _pageController.dispose();
   }
 }
