@@ -1,14 +1,24 @@
 import 'dart:async';
+import 'package:crafty_bay_app/presentation/state_holder/auth_controller/email_verification_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/auth_controller/otp_verification_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/auth_controller/read_profile_controller.dart';
+import 'package:crafty_bay_app/presentation/ui/screen/home_page_screen.dart';
+import 'package:crafty_bay_app/presentation/ui/screen/main_bottom_nav_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../../utils/regX.dart';
+import '../../../utils/snackbar_message.dart';
+import '../../state_holder/auth_controller/countdown_timer.dart';
 import 'complete_profile_screen.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
-  const OtpVerificationScreen({super.key});
+  const OtpVerificationScreen({super.key, required this.email});
+
+  final String email;
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
@@ -16,31 +26,29 @@ class OtpVerificationScreen extends StatefulWidget {
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   bool invalidOTP = false;
-  int resentTimer = 10;
   late Timer countDownTimer;
   final TextEditingController _otpTEController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final OtpVerificationController otpController =
+      Get.find<OtpVerificationController>();
+  final ReadProfileController readProfileController =
+      Get.find<ReadProfileController>();
 
   @override
   void initState() {
     super.initState();
-    startTimer();
+    initiateTimer();
   }
 
-  startTimer() {
-    countDownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        resentTimer = resentTimer - 1;
-      });
-      if (resentTimer < 1) {
-        countDownTimer.cancel();
+  void initiateTimer() {
+    Get.find<CountdownTimer>().resetTime();
+    countDownTimer = Timer.periodic(const Duration(seconds: 1), (countdown) {
+      if (Get.find<CountdownTimer>().timeLeft < 1) {
+        countdown.cancel();
+        return;
       }
+      Get.find<CountdownTimer>().decreaseTime();
     });
-  }
-
-  stopTimer() {
-    if (countDownTimer.isActive) {
-      countDownTimer.cancel();
-    }
   }
 
   @override
@@ -65,69 +73,84 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         .bodyLarge
                         ?.copyWith(color: Colors.grey)),
                 const SizedBox(height: 16),
-                PinCodeTextField(
-                  keyboardType: TextInputType.number,
-                  length: 6,
-                  obscureText: false,
-                  animationType: AnimationType.fade,
-                  pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(5),
-                      fieldHeight: 50,
-                      fieldWidth: 40,
-                      inactiveColor: AppColors.themeColor),
-                  animationDuration: const Duration(milliseconds: 300),
-                  controller: _otpTEController,
-                  appContext: context,
+                Form(
+                  key: _formKey,
+                  child: PinCodeTextField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (otp) {
+                      if (otp == null || otp.isEmpty) {
+                        return 'OTP not given';
+                      }
+                      if (!RegEx.digitRegEx.hasMatch(otp)) {
+                        return 'Wrong! Otp must be 6 Digit ';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.number,
+                    length: 6,
+                    obscureText: false,
+                    animationType: AnimationType.fade,
+                    pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.box,
+                        borderRadius: BorderRadius.circular(5),
+                        fieldHeight: 50,
+                        fieldWidth: 40,
+                        inactiveColor: AppColors.themeColor),
+                    animationDuration: const Duration(milliseconds: 300),
+                    controller: _otpTEController,
+                    appContext: context,
+                  ),
                 ),
                 Text(invalidOTP ? "Invalid OTP" : ''),
                 const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    String otp = '111111';
-                    if (_otpTEController.text == otp) {
-                      setState(() {
-                        invalidOTP = false;
-                      });
-                      stopTimer();
-                      _onTapNextButton();
-                    }else {
-                      setState(() {
-                        invalidOTP = true;
-                      });
-                    }
-                  },
-                  child: const Text('Next'),
-                ),
-                const SizedBox(height: 16),
-                resentTimer == 0
-                    ? const Text(
-                        'Your OTP Code is Expired',
-                        style: TextStyle(color: Colors.red),
-                      )
-                    : RichText(
-                        text: TextSpan(
-                            style: Theme.of(context).textTheme.bodyLarge,
-                            text: 'This Code Will Expire in ',
-                            children: [
-                            TextSpan(
-                                text: '$resentTimer s',
-                                style: const TextStyle(
-                                    color: AppColors.themeColor))
-                          ])),
-                const SizedBox(height: 16),
-                resentTimer == 0
-                    ? TextButton(
+                GetBuilder<CountdownTimer>(builder: (timer) {
+                  return Column(
+                    children: [
+                      ElevatedButton(
                         onPressed: () {
-                          resentTimer = 10;
-                          startTimer();
+                          if (_formKey.currentState!.validate()) {
+                            _onTapNextButton();
+                          }
                         },
-                        child: const Text(
-                          'Resent Code',
-                          style: TextStyle(color: AppColors.themeColor),
-                        ))
-                    : const Text('Resent Code',
-                        style: TextStyle(color: Colors.grey))
+                        child: const Text('Next'),
+                      ),
+                      const SizedBox(height: 16),
+                      timer.timeLeft == 0
+                          ? const Text(
+                              'Your OTP Code is Expired',
+                              style: TextStyle(color: Colors.red),
+                            )
+                          : RichText(
+                              text: TextSpan(
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                  text: 'This Code Will Expire in ',
+                                  children: [
+                                  TextSpan(
+                                      text: '${timer.timeLeft} s',
+                                      style: const TextStyle(
+                                          color: AppColors.themeColor))
+                                ])),
+                      const SizedBox(height: 16),
+                      timer.timeLeft == 0
+                          ? TextButton(
+                              onPressed: () async {
+                                initiateTimer();
+                                bool res = await Get.find<
+                                        EmailVerificationController>()
+                                    .verifyEmail(widget.email);
+                                if (res) {
+                                  initiateTimer();
+                                }
+                              },
+                              child: const Text(
+                                'Resent Code',
+                                style: TextStyle(color: AppColors.themeColor),
+                              ))
+                          : const Text('Resent Code',
+                              style: TextStyle(color: Colors.grey)),
+                    ],
+                  );
+                })
               ],
             ),
           ),
@@ -136,8 +159,34 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     );
   }
 
-  void _onTapNextButton() {
+  void _onTapNextButton() async {
+    if (Get.find<CountdownTimer>().timeLeft == 0) {
+      showSnackBar(context, "Invalid OTP! This OTP is Expired");
+      return;
+    }
+
+    bool res =
+        await otpController.verifyOtp(widget.email, _otpTEController.text);
     Get.off(() => const CompleteProfileScreen());
+    if (res) {
+      final bool isProfile =
+          await readProfileController.getProfileData(otpController.token);
+      if (isProfile) {
+        if (readProfileController.isProfileCreated) {
+          Get.offAll(() => const MainBottomNavScreen());
+        } else {
+          Get.to(() => const CompleteProfileScreen());
+        }
+      } else {
+        if (mounted) {
+          showSnackBar(context, readProfileController.errorMessage!, true);
+        }
+      }
+    } else {
+      if (mounted) {
+        showSnackBar(context, otpController.errorMessage!, true);
+      }
+    }
   }
 
   @override

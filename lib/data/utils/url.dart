@@ -3,6 +3,8 @@ class Url {
   static const String dummy = '$_baseUrl/login';
   static const String sliderListUrl = '$_baseUrl/ListProductSlider';
   static const String categoriesListUrl = '$_baseUrl/CategoryList';
+  static const String readProfile = '$_baseUrl/ReadProfile';
+
 
   static String productListByRemark(String remark) =>
       '$_baseUrl/ListProductByRemark/$remark';
@@ -12,4 +14,11 @@ class Url {
 
   static String productListById(int productId) =>
       '$_baseUrl/ProductDetailsById/$productId';
+
+
+  static String emailVerification(String email) =>
+      '$_baseUrl/UserLogin/$email';
+
+  static String otpVerification(String email, String otp) =>
+      '$_baseUrl/VerifyLogin/$email/$otp';
 }

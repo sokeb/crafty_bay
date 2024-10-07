@@ -1,7 +1,10 @@
+import 'package:crafty_bay_app/presentation/state_holder/auth_controller/email_verification_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/regX.dart';
+import '../../../utils/snackbar_message.dart';
 import 'otp_verification_screen.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
@@ -14,7 +17,7 @@ class EmailVerificationScreen extends StatefulWidget {
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   final TextEditingController _emailTEController = TextEditingController();
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,35 +26,45 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const AppLogoWidget(),
-                const SizedBox(height: 15),
-                Text(
-                  'Welcome Back',
-                  style: Theme.of(context).textTheme.headlineLarge,
-                ),
-                Text('Please Enter Your Email Address',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(color: Colors.grey)),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _emailTEController,
-                  decoration: const InputDecoration(
-                    hintText: 'Email'
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const AppLogoWidget(),
+                  const SizedBox(height: 15),
+                  Text(
+                    'Welcome Back',
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    _onTapNextButton();
-                  },
-                  child: const Text('Next'),
-                )
-              ],
+                  Text('Please Enter Your Email Address',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.copyWith(color: Colors.grey)),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (String? value) {
+                      if (RegEx.emailRegEx.hasMatch(value!)) {
+                        return null;
+                      }
+                      return 'Enter Your Valid Email!';
+                    },
+                    controller: _emailTEController,
+                    decoration: const InputDecoration(
+                      hintText: 'Email',
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      _onTapNextButton(_emailTEController.text.trim());
+                    },
+                    child: const Text('Next'),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -59,8 +72,22 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     );
   }
 
-  void _onTapNextButton() {
-    Get.off(() => const OtpVerificationScreen());
+  void _onTapNextButton(String email) async {
+    if (_formKey.currentState!.validate()) {
+      EmailVerificationController response =
+          Get.find<EmailVerificationController>();
+      bool result = await response.verifyEmail(email);
+      if (result) {
+        Get.off(() => OtpVerificationScreen(email: email,));
+        if (mounted) {
+          showSnackBar(context, response.data!, true);
+        }
+      } else {
+        if (mounted) {
+          showSnackBar(context, response.errorMessage!);
+        }
+      }
+    }
   }
 
   @override
@@ -68,5 +95,4 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     super.dispose();
     _emailTEController.dispose();
   }
-
 }

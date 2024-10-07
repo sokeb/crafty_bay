@@ -15,6 +15,7 @@ class _CraftyBayState extends State<CraftyBay> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
       initialBinding: ControllerBinder(),
       theme: ThemeData(
