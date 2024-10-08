@@ -1,6 +1,7 @@
 import 'package:crafty_bay_app/data/services/network_caller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/countdown_timer.dart';
+import 'package:crafty_bay_app/presentation/state_holder/auth_controller/create_profile_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/email_verification_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/otp_verification_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/read_profile_controller.dart';
@@ -33,6 +34,6 @@ class ControllerBinder extends Bindings{
     Get.lazyPut(()=>OtpVerificationController());
     Get.lazyPut(()=>CountdownTimer());
     Get.lazyPut(()=>ReadProfileController());
-
+    Get.lazyPut(()=>CreateProfileController());
   }
 }

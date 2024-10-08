@@ -165,14 +165,19 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       showSnackBar(context, "Invalid OTP! This OTP is Expired");
       return;
     }
-    bool res =
+    bool isOtpValid =
         await otpController.verifyOtp(widget.email, _otpTEController.text);
-    if (res) {
+
+    if (isOtpValid) {
+
       final bool isProfile = await readProfileController
           .getProfileData(Get.find<AuthController>().token);
+
       if (isProfile) {
+
         if (await Get.find<AuthController>().isProfileCompleted()) {
           Get.offAll(() => const MainBottomNavScreen());
+
         } else {
           Get.to(() => const CompleteProfileScreen());
         }
