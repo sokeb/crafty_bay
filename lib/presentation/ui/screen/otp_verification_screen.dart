@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/email_verification_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/otp_verification_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/read_profile_controller.dart';
@@ -164,15 +165,13 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       showSnackBar(context, "Invalid OTP! This OTP is Expired");
       return;
     }
-
     bool res =
         await otpController.verifyOtp(widget.email, _otpTEController.text);
-    Get.off(() => const CompleteProfileScreen());
     if (res) {
-      final bool isProfile =
-          await readProfileController.getProfileData(otpController.token);
+      final bool isProfile = await readProfileController
+          .getProfileData(Get.find<AuthController>().token);
       if (isProfile) {
-        if (readProfileController.isProfileCreated) {
+        if (await Get.find<AuthController>().isProfileCompleted()) {
           Get.offAll(() => const MainBottomNavScreen());
         } else {
           Get.to(() => const CompleteProfileScreen());

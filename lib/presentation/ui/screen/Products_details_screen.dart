@@ -1,11 +1,13 @@
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/product_details_controller.dart';
+import 'package:crafty_bay_app/presentation/ui/screen/complete_profile_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/email_verification_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/details_page_widgets/details_page_slider.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/details_page_widgets/built_size_select_section.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../utils/snackbar_message.dart';
 import '../utils/app_color.dart';
 import '../widgets/details_page_widgets/built_color_select_section.dart';
 import '../widgets/details_page_widgets/name_review_qunatity_section.dart';
@@ -163,6 +165,15 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
     bool isLoggedIn = await Get.find<AuthController>().isLoggedInUser();
 
     if (isLoggedIn) {
+      bool isProfileCompleted = await Get.find<AuthController>().isProfileCompleted();
+      if(isProfileCompleted){
+
+      }else{
+        if (mounted) {
+          showSnackBar(context, 'Your Profile Is not Completed! Please Complete Your Profile to Continue');
+        }
+        Get.to(()=> const CompleteProfileScreen());
+      }
     } else {
       Get.to(() => const EmailVerificationScreen());
     }
