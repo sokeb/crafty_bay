@@ -51,9 +51,8 @@ class CreateProfileController extends GetxController {
 
     final NetworkResponse response = await Get.find<NetworkCaller>()
         .postRequest(
-            url: Url.readProfile,
-            body: json,
-            token: token);
+            url: Url.createProfile,
+            body: json,);
 
     if (response.statusCode == 200 &&
         response.responseData['msg'] == 'success') {
