@@ -34,11 +34,13 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<SliderListController>().getSliderList();
-    Get.find<CategoriesListController>().getCategoriesList();
-    Get.find<PopularProductListController>().getPopularProductList();
-    Get.find<NewProductListController>().getNewProductList();
-    Get.find<SpecialProductListController>().getSpecialProductList();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<SliderListController>().getSliderList();
+      Get.find<CategoriesListController>().getCategoriesList();
+      Get.find<PopularProductListController>().getPopularProductList();
+      Get.find<NewProductListController>().getNewProductList();
+      Get.find<SpecialProductListController>().getSpecialProductList();
+    });
   }
 
   @override
@@ -49,14 +51,31 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
         bottomNavigationBar: NavigationBar(
           selectedIndex: _navbarController.selectedIndex,
           onDestinationSelected: _navbarController.changeIndex,
-          destinations:  const[
-            NavigationDestination(icon: Icon(Icons.home, color: AppColors.themeColor), label: 'Home'),
+          destinations: [
             NavigationDestination(
-                icon: Icon(Icons.category), label: 'category'),
+                icon: Icon(Icons.home,
+                    color: _navbarController.selectedIndex == 0
+                        ? AppColors.themeColor
+                        : Colors.grey),
+                label: 'Home'),
             NavigationDestination(
-                icon: Icon(Icons.shopping_cart), label: 'Cart'),
+                icon: Icon(Icons.category,
+                    color: _navbarController.selectedIndex == 1
+                        ? AppColors.themeColor
+                        : Colors.grey),
+                label: 'category'),
             NavigationDestination(
-                icon: Icon(Icons.favorite_border), label: 'WishList'),
+                icon: Icon(Icons.shopping_cart,
+                    color: _navbarController.selectedIndex == 2
+                        ? AppColors.themeColor
+                        : Colors.grey),
+                label: 'Cart'),
+            NavigationDestination(
+                icon: Icon(Icons.favorite_border,
+                    color: _navbarController.selectedIndex == 3
+                        ? AppColors.themeColor
+                        : Colors.grey),
+                label: 'WishList'),
           ],
         ),
       );

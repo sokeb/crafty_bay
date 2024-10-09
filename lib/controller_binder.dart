@@ -23,10 +23,10 @@ class ControllerBinder extends Bindings{
     Get.put(Logger());
     Get.put(NetworkCaller(logger: Get.find<Logger>()));
     Get.put(SliderListController());
-    Get.lazyPut(() => CategoriesListController());
-    Get.lazyPut(() => NewProductListController());
-    Get.lazyPut(() => PopularProductListController());
-    Get.lazyPut(() => SpecialProductListController());
+    Get.put(CategoriesListController());
+    Get.put(NewProductListController());
+    Get.put(PopularProductListController());
+    Get.put(SpecialProductListController());
     Get.put(ProductListByCategoryController());
     Get.put(ProductDetailsController());
     Get.put(AuthController());
