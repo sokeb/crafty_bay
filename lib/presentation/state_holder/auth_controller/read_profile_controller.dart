@@ -27,7 +27,7 @@ class ReadProfileController extends GetxController {
     _isProgress = true;
     update();
     final NetworkResponse response = await Get.find<NetworkCaller>()
-        .getRequest(url: Url.readProfile);
+        .getRequest(url: Url.readProfile, token: Get.find<AuthController>().token);
 
     if (response.statusCode == 200 &&
         response.responseData['msg'] == 'success') {

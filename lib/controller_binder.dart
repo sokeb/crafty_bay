@@ -20,7 +20,7 @@ import 'package:logger/logger.dart';
 class ControllerBinder extends Bindings{
   @override
   void dependencies() {
-    Get.lazyPut(() => BottomNavbarController());
+    Get.put(BottomNavbarController());
     Get.put(Logger());
     Get.put(NetworkCaller(logger: Get.find<Logger>()));
     Get.put(SliderListController());
@@ -32,10 +32,10 @@ class ControllerBinder extends Bindings{
     Get.put(ProductDetailsController());
     Get.put(AuthController());
     Get.put(EmailVerificationController());
-    Get.lazyPut(()=>OtpVerificationController());
-    Get.lazyPut(()=>CountdownTimer());
-    Get.lazyPut(()=>ReadProfileController());
-    Get.lazyPut(()=>CreateProfileController());
+    Get.put(OtpVerificationController());
+    Get.put(CountdownTimer());
+    Get.put(ReadProfileController());
+    Get.put(CreateProfileController());
     Get.put(CartListController());
 
   }

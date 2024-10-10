@@ -153,7 +153,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               );
             },
             separatorBuilder: (_, __) => const SizedBox(width: 15),
-            itemCount: 5,
+            itemCount: categoriesListController.categories.length,
           ),
         );
       }),
