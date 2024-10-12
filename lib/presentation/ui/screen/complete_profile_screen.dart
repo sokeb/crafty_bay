@@ -150,7 +150,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           if (address == null || address.isEmpty) {
                             return 'This flied is require';
                           }
-                          if (!RegEx.addressRegEx.hasMatch(address)) {
+                          if (!RegEx.shippingAddressRegEx.hasMatch(address)) {
                             return 'Enter valid Address';
                           }
                           return null;

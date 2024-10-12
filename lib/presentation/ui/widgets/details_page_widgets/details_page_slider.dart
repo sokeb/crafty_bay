@@ -40,7 +40,7 @@ class _DetailsPageSliderState extends State<DetailsPageSlider> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 250,
+      height: 300,
       child: Scaffold(
         body: Stack(
           children: [

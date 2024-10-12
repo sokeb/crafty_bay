@@ -28,11 +28,12 @@ class CategoriesCard extends StatelessWidget {
             width: 80,
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: AppColors.themeColor),
+                borderRadius: BorderRadius.circular(10),
+                //color: AppColors.themeColor.withOpacity(0.1),
                 image: DecorationImage(
-                  image: NetworkImage(categories.categoryImg ?? '' ,),
-                  fit: BoxFit.scaleDown,
-                )),
+                    image: NetworkImage(categories.categoryImg ?? ''),
+                    fit: BoxFit.fill)),
           ),
         ),
         const SizedBox(height: 6),
