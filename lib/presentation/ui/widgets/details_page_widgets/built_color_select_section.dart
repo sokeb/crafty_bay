@@ -7,7 +7,7 @@ class BuiltColorSelectSection extends StatefulWidget {
       {super.key, required this.onSelectedColor, required this.color});
 
   //final List<Color> colors;
-  final Function(Color) onSelectedColor;
+  final Function(String) onSelectedColor;
   final List<String> color;
 
   @override
@@ -38,6 +38,7 @@ class _BuiltColorSelectSectionState extends State<BuiltColorSelectSection> {
                 return GestureDetector(
                   onTap: () {
                     _selectedColor = item;
+                    widget.onSelectedColor(item);
                     setState(() {});
                   },
                   child: Container(

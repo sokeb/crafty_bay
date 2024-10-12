@@ -9,7 +9,7 @@ class BuiltSizeSelectSection extends StatefulWidget {
   });
 
   final List<String> sizes;
-  final Function(Color) onSelectedSize;
+  final Function(String) onSelectedSize;
 
   @override
   State<BuiltSizeSelectSection> createState() => _BuiltSizeSelectSectionState();
@@ -37,6 +37,7 @@ class _BuiltSizeSelectSectionState extends State<BuiltSizeSelectSection> {
                 return GestureDetector(
                   onTap: () {
                     _selectedSize = item;
+                    widget.onSelectedSize(item);
                     setState(() {});
                   },
                   child: Container(

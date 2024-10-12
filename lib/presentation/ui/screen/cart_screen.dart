@@ -2,7 +2,7 @@ import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_co
 import 'package:crafty_bay_app/presentation/state_holder/cart_list_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
-import 'package:crafty_bay_app/utils/snackbar_message.dart';
+import 'package:crafty_bay_app/utils/snack_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../state_holder/bottom_navbar_controller.dart';
@@ -84,7 +84,7 @@ class _CartScreenState extends State<CartScreen> {
                                 Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding: EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(8.0),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,

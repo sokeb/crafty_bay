@@ -2,7 +2,7 @@ import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_co
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/create_profile_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/main_bottom_nav_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/app_logo.dart';
-import 'package:crafty_bay_app/utils/snackbar_message.dart';
+import 'package:crafty_bay_app/utils/snack_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/regX.dart';
-import '../../../utils/snackbar_message.dart';
+import '../../../utils/snack_bar_message.dart';
 import 'otp_verification_screen.dart';
 
 class EmailVerificationScreen extends StatefulWidget {

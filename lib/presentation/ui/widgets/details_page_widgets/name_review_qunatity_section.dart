@@ -6,13 +6,24 @@ import 'package:item_count_number_button/item_count_number_button.dart';
 import '../../screen/reviews_screen.dart';
 import '../../utils/app_color.dart';
 
-class BuiltNameQuantityReviewSection extends StatelessWidget {
+class BuiltNameQuantityReviewSection extends StatefulWidget {
   const BuiltNameQuantityReviewSection({
     super.key,
     required this.productDetails,
+    required this.quantity,
   });
 
   final ProductDetailsModel productDetails;
+  final Function(int) quantity;
+
+  @override
+  State<BuiltNameQuantityReviewSection> createState() =>
+      _BuiltNameQuantityReviewSectionState();
+}
+
+class _BuiltNameQuantityReviewSectionState
+    extends State<BuiltNameQuantityReviewSection> {
+  int _quantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +38,7 @@ class BuiltNameQuantityReviewSection extends StatelessWidget {
               Expanded(
                   child: Wrap(
                 children: [
-                  Text(productDetails.product!.title!,
+                  Text(widget.productDetails.product!.title!,
                       style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -36,11 +47,15 @@ class BuiltNameQuantityReviewSection extends StatelessWidget {
               )),
               ItemCount(
                 color: AppColors.themeColor,
-                initialValue: 1,
+                initialValue: _quantity,
                 minValue: 1,
                 maxValue: 5,
                 decimalPlaces: 0,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  _quantity = value.toInt();
+                  widget.quantity(value.toInt());
+                  setState(() {});
+                },
               )
             ],
           ),
@@ -55,7 +70,7 @@ class BuiltNameQuantityReviewSection extends StatelessWidget {
                     color: Colors.amber,
                     size: 20,
                   ),
-                  Text(' ${productDetails.product!.star!}',
+                  Text(' ${widget.productDetails.product!.star!}',
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black45,
