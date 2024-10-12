@@ -2,6 +2,7 @@ import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_co
 import 'package:crafty_bay_app/presentation/state_holder/cart_list_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
+import 'package:crafty_bay_app/utils/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../state_holder/bottom_navbar_controller.dart';
@@ -16,6 +17,13 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    getCartList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -198,5 +206,24 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
     );
+  }
+
+
+  Future<void> getCartList() async {
+    AuthController authController = Get.find<AuthController>();
+    CartListController cartListController = Get.find<CartListController>();
+    if (await authController.isLoggedInUser() == false) {
+      authController.setToken = "";
+      authController.update();
+      return;
+    }
+    if (cartListController.cartList.isNotEmpty ||
+        authController.token.isEmpty) {
+      return;
+    }
+    bool status = await cartListController.getCartProductList(authController.token);
+    if(mounted && !status){
+      showSnackBar(context, cartListController.errorMessage!);
+    }
   }
 }
