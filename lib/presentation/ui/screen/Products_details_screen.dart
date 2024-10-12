@@ -164,17 +164,23 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
   void _onTapAddToCard() async {
     bool isLoggedIn = await Get.find<AuthController>().isLoggedInUser();
     if (isLoggedIn) {
-      bool isProfileCompleted = await Get.find<AuthController>().isProfileCompleted();
-      if(isProfileCompleted){
+      bool isProfileCompleted =
+          await Get.find<AuthController>().isProfileCompleted();
+      if (isProfileCompleted) {
         //todo
-      }else{
+      } else {
         if (mounted) {
-          showSnackBar(context, 'Your Profile Is not Completed! Please Complete Your Profile to Continue');
+          showSnackBar(context,
+              'Your Profile Is not Completed! Please Complete Your Profile to Continue');
+          Get.to(() => const CompleteProfileScreen());
+          return;
         }
-        Get.to(()=> const CompleteProfileScreen());
       }
     } else {
-      Get.to(() => const EmailVerificationScreen());
+      if (mounted) {
+        Get.to(() => const EmailVerificationScreen());
+        return;
+      }
     }
   }
 }

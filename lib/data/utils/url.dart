@@ -8,7 +8,6 @@ class Url {
   static const String cartList = '$_baseUrl/CartList';
 
 
-
   static String productListByRemark(String remark) =>
       '$_baseUrl/ListProductByRemark/$remark';
 
