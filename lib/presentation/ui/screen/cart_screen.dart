@@ -1,13 +1,13 @@
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/cart_list_controller.dart';
+import 'package:crafty_bay_app/presentation/ui/screen/unauthorise_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:crafty_bay_app/utils/snack_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../state_holder/bottom_navbar_controller.dart';
-import '../utils/assets_path.dart';
-import 'package:item_count_number_button/item_count_number_button.dart';
+import '../widgets/cart_list_widget/cart_list_product_widgets.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -17,7 +17,6 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -41,7 +40,9 @@ class _CartScreenState extends State<CartScreen> {
           title: const Text('Cart'),
         ),
         body: GetBuilder<CartListController>(builder: (cartListController) {
-          if (cartListController.inProgress) {
+          if (Get.find<AuthController>().token.isEmpty) {
+            return const UnauthorizedScreen();
+          } else if (cartListController.inProgress) {
             return const LoadingIndicator();
           } else if (cartListController.cartList.isEmpty) {
             return const Center(
@@ -52,6 +53,7 @@ class _CartScreenState extends State<CartScreen> {
               child: Text(cartListController.errorMessage ?? ''),
             );
           }
+
           return Column(
             children: [
               Expanded(
@@ -60,98 +62,8 @@ class _CartScreenState extends State<CartScreen> {
                     child: ListView.builder(
                       itemCount: cartListController.cartList.length,
                       itemBuilder: (context, int product) {
-                        return Card(
-                          color: Colors.white,
-                          elevation: 1,
-                          child: SizedBox(
-                            height: 120,
-                            width: MediaQuery.sizeOf(context).width - 32,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                    flex: 1,
-                                    child: Container(
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10),
-                                            ),
-                                            image: DecorationImage(
-                                              image:
-                                                  AssetImage(AssetsPath.shoe1),
-                                              fit: BoxFit.scaleDown,
-                                            )))),
-                                Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Wrap(
-                                            children: [
-                                              Text(
-                                                  cartListController
-                                                      .cartList[product]
-                                                      .product!
-                                                      .title!,
-                                                  style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 16,
-                                                      color: Colors.black54)),
-                                            ],
-                                          ),
-                                          Text(
-                                            'Color: ${cartListController.cartList[product].color}, '
-                                                'Size: ${cartListController.cartList[product].size}',
-                                            style: const TextStyle(
-                                                color: Colors.black54),
-                                          ),
-                                          const SizedBox(height: 10),
-                                          Text(
-                                            '\$${cartListController.cartList[product].price}',
-                                            style: const TextStyle(
-                                                color: AppColors.themeColor,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w500),
-                                          )
-                                        ],
-                                      ),
-                                    )),
-                                Expanded(
-                                    flex: 1,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          IconButton(
-                                              onPressed: () {},
-                                              icon: const Icon(
-                                                  Icons.delete_outline)),
-                                          FittedBox(
-                                            child: ItemCount(
-                                              color: AppColors.themeColor,
-                                              initialValue: 1,
-                                              minValue: 1,
-                                              maxValue: 5,
-                                              decimalPlaces: 0,
-                                              onChanged: (value) {},
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ))
-                              ],
-                            ),
-                          ),
+                        return CartListProductCard(
+                          cartProduct: cartListController.cartList[product],
                         );
                       },
                     )),
@@ -208,7 +120,6 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-
   Future<void> getCartList() async {
     AuthController authController = Get.find<AuthController>();
     CartListController cartListController = Get.find<CartListController>();
@@ -217,12 +128,16 @@ class _CartScreenState extends State<CartScreen> {
       authController.update();
       return;
     }
-    if (cartListController.cartList.isNotEmpty ||
-        authController.token.isEmpty) {
+    if (cartListController.cartList.isNotEmpty) {
+      await cartListController.getCartProductList(authController.token);
       return;
     }
-    bool status = await cartListController.getCartProductList(authController.token);
-    if(mounted && !status){
+    if (authController.token.isEmpty) {
+      return;
+    }
+    bool status =
+        await cartListController.getCartProductList(authController.token);
+    if (mounted && !status) {
       showSnackBar(context, cartListController.errorMessage!);
     }
   }

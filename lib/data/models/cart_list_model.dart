@@ -36,7 +36,7 @@ class CartDataModel {
   String? price;
   String? createdAt;
   String? updatedAt;
-  CartProduct? product;
+  CartProduct? productData;
 
   CartDataModel(
       {this.id,
@@ -48,7 +48,7 @@ class CartDataModel {
         this.price,
         this.createdAt,
         this.updatedAt,
-        this.product});
+        this.productData});
 
   CartDataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -60,7 +60,7 @@ class CartDataModel {
     price = json['price'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    product =
+    productData =
     json['product'] != null ? new CartProduct.fromJson(json['product']) : null;
   }
 
@@ -75,8 +75,8 @@ class CartDataModel {
     data['price'] = this.price;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    if (this.product != null) {
-      data['product'] = this.product!.toJson();
+    if (this.productData != null) {
+      data['product'] = this.productData!.toJson();
     }
     return data;
   }
