@@ -8,7 +8,6 @@ class Url {
   static const String cartList = '$_baseUrl/CartList';
   static const String createCartList = '$_baseUrl/CreateCartList';
 
-
   static String productListByRemark(String remark) =>
       '$_baseUrl/ListProductByRemark/$remark';
 
@@ -18,10 +17,11 @@ class Url {
   static String productListById(int productId) =>
       '$_baseUrl/ProductDetailsById/$productId';
 
-
-  static String emailVerification(String email) =>
-      '$_baseUrl/UserLogin/$email';
+  static String emailVerification(String email) => '$_baseUrl/UserLogin/$email';
 
   static String otpVerification(String email, String otp) =>
       '$_baseUrl/VerifyLogin/$email/$otp';
+
+  static String deleteCartList(int productId) =>
+      '$_baseUrl/DeleteCartList/$productId';
 }

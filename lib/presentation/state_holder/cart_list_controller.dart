@@ -60,7 +60,7 @@ class CartListController extends GetxController {
   }
 
   // Change quantity for a specific product
-  void changeQuantity(String productId, bool increase) {
+  void updateCard(String productId, bool increase) {
     int currentQty = _quantity[productId] ?? 1;
     if (increase) {
       _quantity[productId] = currentQty + 1;
@@ -74,5 +74,19 @@ class CartListController extends GetxController {
       _totalBill = _totalBill - _productPrice[productId]!;
     }
     update(); // Notify GetX to update the UI
+  }
+
+  Future<bool> deleteCartProductList(int productId, String token) async {
+    bool isSuccess = false;
+    final NetworkResponse response = await Get.find<NetworkCaller>()
+        .getRequest(url: Url.deleteCartList(productId), token: token);
+    if (response.isSuccess) {
+      _errorMessage = null;
+      isSuccess = true;
+    } else {
+      _errorMessage = response.errorMessage;
+    }
+    update();
+    return isSuccess;
   }
 }
