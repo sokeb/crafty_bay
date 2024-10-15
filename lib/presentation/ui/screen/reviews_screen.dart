@@ -1,4 +1,5 @@
 import 'package:crafty_bay_app/presentation/ui/screen/create_review_screen.dart';
+import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../state_holder/product_review_controller.dart';
@@ -15,12 +16,14 @@ class ReviewsScreen extends StatefulWidget {
 
 class _ReviewsScreenState extends State<ReviewsScreen> {
   ProductReviewController productReviewController =
-      Get.find<ProductReviewController>();
+  Get.find<ProductReviewController>();
 
   @override
   void initState() {
     super.initState();
-    productReviewController.getReviewList(widget.productId);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      productReviewController.getReviewList(widget.productId);
+    });
   }
 
   @override
@@ -35,6 +38,17 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
         title: const Text('Reviews'),
       ),
       body: GetBuilder<ProductReviewController>(builder: (reviewController) {
+        if (reviewController.inProgress) {
+          return const LoadingIndicator();
+        } else if (reviewController.reviewList == null || reviewController.reviewList!.isEmpty) {
+          return const Center(
+            child: Text(
+              'No reviews available.',
+              style: TextStyle(fontSize: 16, color: Colors.black54),
+            ),
+          );
+        }
+
         return Column(
           children: [
             Expanded(
@@ -93,15 +107,16 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                     },
                   )),
             ),
-            buildTotalPriceAndCheckoutSection(reviewController.reviewList!.length)
+            bottomBar(reviewController.reviewList!.length)
           ],
         );
       }),
     );
   }
+
 }
 
-Widget buildTotalPriceAndCheckoutSection(int totalReviews) {
+Widget bottomBar(int totalReviews) {
   return Container(
     decoration: BoxDecoration(
         color: AppColors.themeColor.withOpacity(0.2),
