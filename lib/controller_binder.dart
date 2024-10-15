@@ -6,6 +6,7 @@ import 'package:crafty_bay_app/presentation/state_holder/auth_controller/email_v
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/otp_verification_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/read_profile_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/bottom_navbar_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/cart_list_card_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/cart_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/categories_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/create_cart_list_controller.dart';
@@ -39,6 +40,8 @@ class ControllerBinder extends Bindings{
     Get.put(CreateProfileController());
     Get.put(CartListController());
     Get.put(CreateCartListController());
+    Get.put(CartListCardController());
+
 
   }
 }

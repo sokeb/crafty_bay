@@ -1,4 +1,5 @@
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/cart_list_card_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/cart_list_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/unauthorise_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
@@ -68,7 +69,7 @@ class _CartScreenState extends State<CartScreen> {
                       },
                     )),
               ),
-              buildTotalPriceAndCheckoutSection()
+              buildTotalPriceAndCheckoutSection(cartListController)
             ],
           );
         }),
@@ -76,7 +77,8 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget buildTotalPriceAndCheckoutSection() {
+  Widget buildTotalPriceAndCheckoutSection(
+      CartListController cartListController) {
     return Container(
       decoration: BoxDecoration(
           color: AppColors.themeColor.withOpacity(0.2),
@@ -91,22 +93,22 @@ class _CartScreenState extends State<CartScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Total Price',
+                const Text('Total Price',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
                         color: Colors.black54)),
-                SizedBox(
+                const SizedBox(
                   height: 2,
                 ),
-                Text('\$1000000.00',
-                    style: TextStyle(
+                Text('\$${cartListController.totalBill}',
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
-                        color: AppColors.themeColor)),
+                        color: AppColors.themeColor))
               ],
             ),
             SizedBox(
