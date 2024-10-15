@@ -1,10 +1,7 @@
 import 'package:crafty_bay_app/data/models/network_response.dart';
 import 'package:crafty_bay_app/data/services/network_caller.dart';
 import 'package:crafty_bay_app/data/utils/url.dart';
-import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../../data/models/user_model.dart';
 
 class CreateCartListController extends GetxController {
   bool _isProgress = false;

@@ -82,7 +82,7 @@ class _BuiltNameQuantityReviewSectionState
               ),
               TextButton(
                   onPressed: () {
-                    Get.to(() => const ReviewsScreen());
+                    Get.to(() => ReviewsScreen(productId: widget.productDetails.id!,));
                   },
                   child: const Text('Reviews',
                       style: TextStyle(

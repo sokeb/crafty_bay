@@ -1,16 +1,28 @@
 import 'package:crafty_bay_app/presentation/ui/screen/create_review_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../state_holder/product_review_controller.dart';
 import '../utils/app_color.dart';
 
 class ReviewsScreen extends StatefulWidget {
-  const ReviewsScreen({super.key});
+  const ReviewsScreen({super.key, required this.productId});
+
+  final int productId;
 
   @override
   State<ReviewsScreen> createState() => _ReviewsScreenState();
 }
 
 class _ReviewsScreenState extends State<ReviewsScreen> {
+  ProductReviewController productReviewController =
+      Get.find<ProductReviewController>();
+
+  @override
+  void initState() {
+    super.initState();
+    productReviewController.getReviewList(widget.productId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,65 +34,74 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
             icon: const Icon(Icons.arrow_back_ios)),
         title: const Text('Reviews'),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (context, int index) {
-                    return Card(
-                      color: Colors.white,
-                      elevation: 1,
-                      child: SizedBox(
-                        width: MediaQuery.sizeOf(context).width - 32,
-                        child: const Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: Colors.black12,
-                                    radius: 12.0,
-                                    child: Icon(
-                                      Icons.person_2_outlined,
-                                      color: Colors.black54,
-                                      size: 18,
+      body: GetBuilder<ProductReviewController>(builder: (reviewController) {
+        return Column(
+          children: [
+            Expanded(
+              child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: ListView.builder(
+                    itemCount: reviewController.reviewList!.length,
+                    itemBuilder: (context, int index) {
+                      return Card(
+                        color: Colors.white,
+                        elevation: 1,
+                        child: SizedBox(
+                          width: MediaQuery.sizeOf(context).width - 32,
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const CircleAvatar(
+                                      backgroundColor: Colors.black12,
+                                      radius: 12.0,
+                                      child: Icon(
+                                        Icons.person_2_outlined,
+                                        color: Colors.black54,
+                                        size: 18,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(width: 8),
-                                  Text(
-                                    'Rabbil Hasan',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400),
-                                  )
-                                ],
-                              ),
-                              Text(
-                                  '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. ''',
-                                  style: TextStyle(
-                                      color: Colors.black45,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400))
-                            ],
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      reviewController
+                                          .reviewList![index].profile!.cusName!,
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                    reviewController
+                                        .reviewList![index].description!,
+                                    style: const TextStyle(
+                                        color: Colors.black45,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400))
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                )),
-          ),
-          buildTotalPriceAndCheckoutSection()
-        ],
-      ),
+                      );
+                    },
+                  )),
+            ),
+            buildTotalPriceAndCheckoutSection(reviewController.reviewList!.length)
+          ],
+        );
+      }),
     );
   }
 }
 
-Widget buildTotalPriceAndCheckoutSection() {
+Widget buildTotalPriceAndCheckoutSection(int totalReviews) {
   return Container(
     decoration: BoxDecoration(
         color: AppColors.themeColor.withOpacity(0.2),
@@ -90,17 +111,17 @@ Widget buildTotalPriceAndCheckoutSection() {
         )),
     height: 80,
     child: Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.only(left: 30, right: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Column(
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Reviews  (1000)',
-                  style: TextStyle(
+              Text("$totalReviews Reviews",
+                  style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                       color: Colors.black54)),
@@ -113,7 +134,7 @@ Widget buildTotalPriceAndCheckoutSection() {
             ),
             child: IconButton(
                 onPressed: () {
-                  Get.to(()=> const CreateReviewScreen());
+                  Get.to(() => const CreateReviewScreen());
                 },
                 icon: const Icon(
                   Icons.add,

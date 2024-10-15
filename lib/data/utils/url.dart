@@ -24,4 +24,7 @@ class Url {
 
   static String deleteCartList(int productId) =>
       '$_baseUrl/DeleteCartList/$productId';
+
+  static String listReviewByProduct(int productId) =>
+      '$_baseUrl/ListReviewByProduct/$productId';
 }

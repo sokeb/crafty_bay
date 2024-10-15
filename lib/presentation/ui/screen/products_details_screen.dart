@@ -224,4 +224,6 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
       }
     }
   }
+
+
 }
