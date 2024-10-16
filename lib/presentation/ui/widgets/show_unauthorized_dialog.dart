@@ -15,8 +15,5 @@ showUnauthorizedDialog() {
       Get.to(
           () => const EmailVerificationScreen()); // Navigate to the login page
     },
-    onCancel: () {
-      Get.back(); // Dismiss the dialog
-    },
   );
 }
