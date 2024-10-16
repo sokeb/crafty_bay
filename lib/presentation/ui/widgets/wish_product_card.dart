@@ -1,13 +1,27 @@
+import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/delete_wish_list_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/wish_product_list_controller.dart';
+import 'package:crafty_bay_app/utils/snack_bar_message.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import '../../../data/models/wish_product_model.dart';
+import '../screen/products_details_screen.dart';
 import '../utils/app_color.dart';
 import '../utils/assets_path.dart';
 
-class WishProductCard extends StatelessWidget {
+class WishProductCard extends StatefulWidget {
   const WishProductCard({
     super.key,
+    required this.productData,
   });
 
+  final WishProductData productData;
+
+  @override
+  State<WishProductCard> createState() => _WishProductCardState();
+}
+
+class _WishProductCardState extends State<WishProductCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -18,9 +32,10 @@ class WishProductCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GestureDetector(
-              // onTap: () {
-              //   Get.to(() => const ProductsDetailsScreen( ));
-              // },
+              onTap: () {
+                Get.to(() => ProductsDetailsScreen(
+                    productId: widget.productData.productId!));
+              },
               child: Container(
                 height: 100,
                 width: MediaQuery.sizeOf(context).width,
@@ -41,37 +56,39 @@ class WishProductCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Special Shoe',
+                  Text(
+                    widget.productData.product!.title!,
                     maxLines: 1,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.w600, color: Colors.black45),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('\$120',
-                          style: TextStyle(
+                      Text('\$${widget.productData.product!.price!}',
+                          style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               color: AppColors.themeColor,
                               fontSize: 12)),
-                      const Wrap(
+                      Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.star,
                             color: Colors.amber,
                             size: 18,
                           ),
-                          Text('4',
-                              style: TextStyle(
+                          Text("${widget.productData.product!.star}",
+                              style: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black45,
                                   fontSize: 12))
                         ],
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          deleteWishProduct(widget.productData.productId!);
+                        },
                         child: Card(
                           color: AppColors.themeColor,
                           shape: RoundedRectangleBorder(
@@ -95,5 +112,25 @@ class WishProductCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> deleteWishProduct(int productId) async {
+    AuthController authController = Get.find<AuthController>();
+    DeleteWishListController deleteController =
+        Get.find<DeleteWishListController>();
+
+    bool isDeleted =
+        await deleteController.deleteWishlist(productId, authController.token);
+
+    if (mounted && isDeleted) {
+      showSnackBar(context, 'Product deleted from wish list', true);
+      await Get.find<WishProductListController>()
+          .getWishProductList(authController.token);
+    } else {
+      if (mounted) {
+        showSnackBar(context, deleteController.errorMessage!);
+        return;
+      }
+    }
   }
 }

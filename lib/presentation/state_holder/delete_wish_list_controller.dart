@@ -17,7 +17,7 @@ class DeleteWishListController extends GetxController {
     _inProgress = true;
     update();
     final NetworkResponse response =
-    await Get.find<NetworkCaller>().getRequest(url: Url.deleteCartList(productId),token: token);
+    await Get.find<NetworkCaller>().getRequest(url: Url.removeWishList(productId),token: token);
     if (response.statusCode == 200 &&
         response.responseData['msg'] == 'success') {
       _errorMessage = null;

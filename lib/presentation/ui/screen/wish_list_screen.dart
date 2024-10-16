@@ -6,7 +6,7 @@ import '../../state_holder/auth_controller/auth_controller.dart';
 import '../../state_holder/bottom_navbar_controller.dart';
 import '../../state_holder/wish_product_list_controller.dart';
 import '../widgets/loading_widget.dart';
-import '../widgets/wish-product_card.dart';
+import '../widgets/wish_product_card.dart';
 
 class WishListScreen extends StatefulWidget {
   const WishListScreen({super.key});
@@ -61,9 +61,12 @@ class _WishListScreenState extends State<WishListScreen> {
                     crossAxisCount: 3,
                     childAspectRatio: 0.8,
                     crossAxisSpacing: 0.1),
-                itemBuilder: (context, index) {
-                  return const FittedBox(
-                    child: WishProductCard(),
+                itemBuilder: (context, product) {
+                  return FittedBox(
+                    child: WishProductCard(
+                      productData:
+                          wishProductListController.wishProductList[product],
+                    ),
                   );
                 }),
           );
