@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import '../../../utils/snack_bar_message.dart';
 import '../utils/app_color.dart';
 import '../widgets/details_page_widgets/built_color_select_section.dart';
-import '../widgets/details_page_widgets/name_review_qunatity_section.dart';
+import '../widgets/details_page_widgets/name_review_quantity_section.dart';
 
 class ProductsDetailsScreen extends StatefulWidget {
   const ProductsDetailsScreen({super.key, required this.productId});
