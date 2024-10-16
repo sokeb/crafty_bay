@@ -154,7 +154,7 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Total Price',
+                const Text('Price',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
