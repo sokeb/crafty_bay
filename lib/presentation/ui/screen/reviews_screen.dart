@@ -1,4 +1,6 @@
+import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/create_review_screen.dart';
+import 'package:crafty_bay_app/presentation/ui/screen/email_verification_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +18,7 @@ class ReviewsScreen extends StatefulWidget {
 
 class _ReviewsScreenState extends State<ReviewsScreen> {
   ProductReviewController productReviewController =
-  Get.find<ProductReviewController>();
+      Get.find<ProductReviewController>();
 
   @override
   void initState() {
@@ -40,7 +42,8 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
       body: GetBuilder<ProductReviewController>(builder: (reviewController) {
         if (reviewController.inProgress) {
           return const LoadingIndicator();
-        } else if (reviewController.reviewList == null || reviewController.reviewList!.isEmpty) {
+        } else if (reviewController.reviewList == null ||
+            reviewController.reviewList!.isEmpty) {
           return const Center(
             child: Text(
               'No reviews available.',
@@ -114,51 +117,82 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     );
   }
 
-}
-
-Widget bottomBar(int totalReviews) {
-  return Container(
-    decoration: BoxDecoration(
-        color: AppColors.themeColor.withOpacity(0.2),
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(25),
-          topRight: Radius.circular(25),
-        )),
-    height: 80,
-    child: Padding(
-      padding: const EdgeInsets.only(left: 30, right: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("$totalReviews Reviews",
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                      color: Colors.black54)),
-            ],
-          ),
-          Container(
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.themeColor,
+  Widget bottomBar(int totalReviews) {
+    return Container(
+      decoration: BoxDecoration(
+          color: AppColors.themeColor.withOpacity(0.2),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
+          )),
+      height: 80,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 30, right: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("$totalReviews Reviews",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.black54)),
+              ],
             ),
-            child: IconButton(
-                onPressed: () {
-                  Get.to(() => const CreateReviewScreen());
-                },
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 35,
-                )),
-          )
-        ],
+            Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.themeColor,
+              ),
+              child: IconButton(
+                  onPressed: () {
+                    addReview();
+                  },
+                  icon: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 35,
+                  )),
+            )
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
+
+  void addReview() async {
+    final isLoggedIn = await Get.find<AuthController>().isLoggedInUser();
+
+    if (!isLoggedIn) {
+      showUnauthorizedDialog();
+      return;
+    } else {
+      // Navigate to the CreateReviewScreen
+      Get.to(() => const CreateReviewScreen());
+      return;
+    }
+  }
+
+  void showUnauthorizedDialog() {
+    Get.defaultDialog(
+      title: 'Unauthorized Access',
+      middleText:
+          'You are not authorized to access this feature. Please login to continue.',
+      textConfirm: 'Login',
+      buttonColor: AppColors.themeColor,
+      textCancel: 'Cancel',
+      onConfirm: () {
+        Get.back(); // Dismiss the dialog
+        Get.to(() =>
+            const EmailVerificationScreen()); // Navigate to the login page
+      },
+      onCancel: () {
+        Get.back(); // Dismiss the dialog
+      },
+    );
+  }
 }
