@@ -1,11 +1,11 @@
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/create_review_screen.dart';
-import 'package:crafty_bay_app/presentation/ui/screen/email_verification_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../state_holder/product_review_controller.dart';
 import '../utils/app_color.dart';
+import '../widgets/show_unauthorized_dialog.dart';
 
 class ReviewsScreen extends StatefulWidget {
   const ReviewsScreen({super.key, required this.productId});
@@ -177,24 +177,5 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
           ));
       return;
     }
-  }
-
-  void showUnauthorizedDialog() {
-    Get.defaultDialog(
-      title: 'Unauthorized Access',
-      middleText:
-          'You are not authorized to access this feature. Please login to continue.',
-      textConfirm: 'Login',
-      buttonColor: AppColors.themeColor,
-      textCancel: 'Cancel',
-      onConfirm: () {
-        Get.back(); // Dismiss the dialog
-        Get.to(() =>
-            const EmailVerificationScreen()); // Navigate to the login page
-      },
-      onCancel: () {
-        Get.back(); // Dismiss the dialog
-      },
-    );
   }
 }
