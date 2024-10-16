@@ -88,7 +88,7 @@ class _BuiltNameQuantityReviewSectionState
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: AppColors.themeColor,
-                          fontSize: 12))),
+                          fontSize: 15))),
               const SizedBox(
                 width: 16,
               ),

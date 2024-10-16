@@ -150,7 +150,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               ),
               child: IconButton(
                   onPressed: () {
-                    addReview();
+                    addReview(widget.productId);
                   },
                   icon: const Icon(
                     Icons.add,
@@ -164,7 +164,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     );
   }
 
-  void addReview() async {
+  void addReview(int productId) async {
     final isLoggedIn = await Get.find<AuthController>().isLoggedInUser();
 
     if (!isLoggedIn) {
@@ -172,7 +172,9 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
       return;
     } else {
       // Navigate to the CreateReviewScreen
-      Get.to(() => const CreateReviewScreen());
+      Get.to(() => CreateReviewScreen(
+            productId: productId,
+          ));
       return;
     }
   }
