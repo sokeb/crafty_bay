@@ -12,6 +12,7 @@ import '../../../utils/regX.dart';
 import '../../../utils/snack_bar_message.dart';
 import '../../state_holder/auth_controller/countdown_timer.dart';
 import 'complete_profile_screen.dart';
+import 'main_bottom_nav_screen.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({super.key, required this.email});
@@ -173,8 +174,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
       if (mounted && isProfile) {
         if (mounted && await Get.find<AuthController>().isProfileCompleted()) {
-          //Get.offAll(() => const MainBottomNavScreen());
-          Get.back();
+          Get.offAll(() => const MainBottomNavScreen());
+          //Get.back();
           return;
         } else {
           if (mounted) {

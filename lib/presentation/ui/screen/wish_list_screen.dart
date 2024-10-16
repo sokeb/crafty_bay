@@ -1,8 +1,12 @@
+import 'package:crafty_bay_app/presentation/ui/screen/unauthorized_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../utils/snack_bar_message.dart';
+import '../../state_holder/auth_controller/auth_controller.dart';
 import '../../state_holder/bottom_navbar_controller.dart';
-import '../utils/app_color.dart';
-import '../utils/assets_path.dart';
+import '../../state_holder/wish_product_list_controller.dart';
+import '../widgets/loading_widget.dart';
+import '../widgets/wish-product_card.dart';
 
 class WishListScreen extends StatefulWidget {
   const WishListScreen({super.key});
@@ -12,6 +16,12 @@ class WishListScreen extends StatefulWidget {
 }
 
 class _WishListScreenState extends State<WishListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    getWishProductList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -26,111 +36,62 @@ class _WishListScreenState extends State<WishListScreen> {
                 Get.find<BottomNavbarController>().selectHome();
               },
               icon: const Icon(Icons.arrow_back_ios)),
-          title: const Text('Cart'),
+          title: const Text('Wish List'),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GridView.builder(
-              itemCount: 10,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: 0.8,
-                  crossAxisSpacing: 0.1),
-              itemBuilder: (context, index) {
-                return FittedBox(
-                  child: Card(
-                    elevation: 3,
-                    child: SizedBox(
-                      width: 120,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            // onTap: () {
-                            //   Get.to(() => const ProductsDetailsScreen( ));
-                            // },
-                            child: Container(
-                              height: 100,
-                              width: MediaQuery.sizeOf(context).width,
-                              decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(8),
-                                    topRight: Radius.circular(8),
-                                  ),
-                                  color: AppColors.themeColor.withOpacity(0.1),
-                                  image: const DecorationImage(
-                                    image: AssetImage(AssetsPath.shoe1),
-                                    fit: BoxFit.scaleDown,
-                                  )),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Special Shoe',
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black45),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text('\$120',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColors.themeColor,
-                                            fontSize: 12)),
-                                    const Wrap(
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.star,
-                                          color: Colors.amber,
-                                          size: 18,
-                                        ),
-                                        Text('4',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black45,
-                                                fontSize: 12))
-                                      ],
-                                    ),
-                                    InkWell(
-                                      onTap: () {},
-                                      child: Card(
-                                        color: AppColors.themeColor,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(4)),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(2.0),
-                                          child: Icon(
-                                            Icons.delete_outline,
-                                            color: Colors.white,
-                                            size: 16,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              }),
-        ),
+        body: GetBuilder<WishProductListController>(
+            builder: (wishProductListController) {
+          if (Get.find<AuthController>().token.isEmpty) {
+            return const UnauthorizedScreen();
+          } else if (wishProductListController.inProgress) {
+            return const LoadingIndicator();
+          } else if (wishProductListController.wishProductList.isEmpty) {
+            return const Center(
+              child: Text('Empty'),
+            );
+          } else if (wishProductListController.errorMessage != null) {
+            return Center(
+              child: Text(wishProductListController.errorMessage ?? ''),
+            );
+          }
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GridView.builder(
+                itemCount: wishProductListController.wishProductList.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 0.8,
+                    crossAxisSpacing: 0.1),
+                itemBuilder: (context, index) {
+                  return const FittedBox(
+                    child: WishProductCard(),
+                  );
+                }),
+          );
+        }),
       ),
     );
+  }
+
+  Future<void> getWishProductList() async {
+    AuthController authController = Get.find<AuthController>();
+    WishProductListController wishListController =
+        Get.find<WishProductListController>();
+    if (await authController.isLoggedInUser() == false) {
+      authController.setToken = "";
+      authController.update();
+      return;
+    }
+    if (wishListController.wishProductList.isNotEmpty) {
+      await wishListController.getWishProductList(authController.token);
+      return;
+    }
+    if (authController.token.isEmpty) {
+      return;
+    }
+    bool status =
+        await wishListController.getWishProductList(authController.token);
+    if (mounted && !status) {
+      showSnackBar(context, wishListController.errorMessage!);
+    }
   }
 }
