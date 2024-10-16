@@ -16,13 +16,13 @@ class CreateWishListController extends GetxController {
     bool isSuccess = false;
     _inProgress = true;
     update();
-    final NetworkResponse response =
-    await Get.find<NetworkCaller>().getRequest(url: Url.createWishList(productId), token: token);
+    final NetworkResponse response = await Get.find<NetworkCaller>()
+        .getRequest(url: Url.createWishList(productId), token: token);
     if (response.statusCode == 200 &&
         response.responseData['msg'] == 'success') {
       _errorMessage = null;
       isSuccess = true;
-    }else {
+    } else {
       _errorMessage = response.errorMessage;
     }
     _inProgress = false;

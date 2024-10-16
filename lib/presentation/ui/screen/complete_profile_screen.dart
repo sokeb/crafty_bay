@@ -182,7 +182,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       lastName: _lastNameTEController.text,
       mobile: _mobileTEController.text.trim(),
       city: _cityTEController.text,
-      shippingAddress: _addressTEController.text, token: Get.find<AuthController>().token,
+      shippingAddress: _addressTEController.text,
+      token: Get.find<AuthController>().token,
     );
     if (result) {
       Get.offAll(() => const MainBottomNavScreen());

@@ -7,9 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class OtpVerificationController extends GetxController {
   bool _isProgress = false;
-  String? _errorMessage ;
+  String? _errorMessage;
 
   bool get inProgress => _isProgress;
+
   String? get errorMessage => _errorMessage;
 
   Future<bool> verifyOtp(String email, String otp) async {
@@ -19,15 +20,16 @@ class OtpVerificationController extends GetxController {
     final NetworkResponse response = await Get.find<NetworkCaller>()
         .getRequest(url: Url.otpVerification(email, otp));
 
-    if(response.statusCode == 200 && response.responseData['msg'] == 'success'){
+    if (response.statusCode == 200 &&
+        response.responseData['msg'] == 'success') {
       _errorMessage = null;
-      isSuccess = true;
+
       String token = response.responseData['data'];
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString("token", token);
-      Get.find<AuthController>().setToken =token;
-
-    }else{
+      Get.find<AuthController>().setToken = token;
+      isSuccess = true;
+    } else {
       _errorMessage = response.errorMessage;
     }
     _isProgress = false;

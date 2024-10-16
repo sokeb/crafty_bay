@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 class AppbarIconButtonWidget extends StatelessWidget {
   const AppbarIconButtonWidget({
-    super.key, required this.onTap, required this.iconData,
+    super.key,
+    required this.onTap,
+    required this.iconData,
   });
 
   final VoidCallback onTap;

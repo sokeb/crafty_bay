@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductListScreen extends StatefulWidget {
-  const ProductListScreen(
-      {super.key, required this.category});
+  const ProductListScreen({super.key, required this.category});
 
   final CategoriesModel category;
-
 
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();
@@ -44,8 +42,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
               child: Text(productListByCategoryController.errorMessage!),
             );
           }
-          if(productListByCategoryController.productList.isEmpty){
-            return const  Center(child: Text('No Product Available'),);
+          if (productListByCategoryController.productList.isEmpty) {
+            return const Center(
+              child: Text('No Product Available'),
+            );
           }
 
           return GridView.builder(
@@ -57,7 +57,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
               itemBuilder: (context, index) {
                 return FittedBox(
                   child: ProductCard(
-                    products: productListByCategoryController.productList[index],
+                    products:
+                        productListByCategoryController.productList[index],
                   ),
                 );
               });

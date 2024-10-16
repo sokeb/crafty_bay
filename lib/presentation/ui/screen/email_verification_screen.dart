@@ -78,7 +78,9 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
           Get.find<EmailVerificationController>();
       bool result = await response.verifyEmail(email);
       if (mounted && result) {
-        Get.off(() => OtpVerificationScreen(email: email,));
+        Get.off(() => OtpVerificationScreen(
+              email: email,
+            ));
         if (mounted) {
           showSnackBar(context, response.data!, true);
         }

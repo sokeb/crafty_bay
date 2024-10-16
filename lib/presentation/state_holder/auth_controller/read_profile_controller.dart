@@ -26,8 +26,8 @@ class ReadProfileController extends GetxController {
     bool isSuccess = false;
     _isProgress = true;
     update();
-    final NetworkResponse response = await Get.find<NetworkCaller>()
-        .getRequest(url: Url.readProfile, token: Get.find<AuthController>().token);
+    final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
+        url: Url.readProfile, token: Get.find<AuthController>().token);
 
     if (response.statusCode == 200 &&
         response.responseData['msg'] == 'success') {
@@ -35,10 +35,11 @@ class ReadProfileController extends GetxController {
       if (response.responseData['data'] != null) {
         _userModel = UserModel.fromJson(response.responseData['data']);
         SharedPreferences localStorage = await SharedPreferences.getInstance();
-        await Get.find<AuthController>().saveUserData(_userModel!, localStorage);
+        await Get.find<AuthController>()
+            .saveUserData(_userModel!, localStorage);
         localStorage.setBool("hasUserData", true);
         _isProfileCreated = true;
-      }else{
+      } else {
         SharedPreferences localStorage = await SharedPreferences.getInstance();
         localStorage.setBool("hasUserData", false);
       }

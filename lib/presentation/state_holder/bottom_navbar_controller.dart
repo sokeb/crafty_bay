@@ -17,5 +17,4 @@ class BottomNavbarController extends GetxController {
   void selectHome() {
     changeIndex(0);
   }
-
 }

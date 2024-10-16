@@ -25,11 +25,11 @@ class CategoriesListController extends GetxController {
     final NetworkResponse response =
         await Get.find<NetworkCaller>().getRequest(url: Url.categoriesListUrl);
     if (response.isSuccess) {
-      isSuccess = true;
       _errorMessage = null;
       _categoriesList =
           CategoriesListModel.fromJson(response.responseData).categoriesList ??
               [];
+      isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;
     }

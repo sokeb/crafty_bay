@@ -32,7 +32,7 @@ class CreateProfileController extends GetxController {
     update();
 
     Map<String, String> json = {
-      "cus_name": "${firstName} ${lastName}",
+      "cus_name": "$firstName $lastName",
       "cus_add": shippingAddress,
       "cus_city": city,
       "cus_state": city,

@@ -22,12 +22,13 @@ class ProductListByCategoryController extends GetxController {
     bool isSuccess = false;
     _inProgress = true;
     update();
-    final NetworkResponse response =
-    await Get.find<NetworkCaller>().getRequest(url: Url.productListByCategory(categoryId));
+    final NetworkResponse response = await Get.find<NetworkCaller>()
+        .getRequest(url: Url.productListByCategory(categoryId));
     if (response.isSuccess) {
-      isSuccess = true;
       _errorMessage = null;
-      _productList = ProductsListModel.fromJson(response.responseData).productList ?? [];
+      _productList =
+          ProductsListModel.fromJson(response.responseData).productList ?? [];
+      isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;
     }

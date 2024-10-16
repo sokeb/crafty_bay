@@ -35,7 +35,8 @@ class CreateProductReviewController extends GetxController {
       _errorMessage = null;
       isSuccess = true;
     } else {
-      _errorMessage = response.errorMessage ?? "An error occurred. Please try again.";
+      _errorMessage =
+          response.errorMessage ?? "An error occurred. Please try again.";
     }
     _isProgress = false;
     update();

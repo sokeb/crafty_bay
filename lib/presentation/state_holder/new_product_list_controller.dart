@@ -22,12 +22,13 @@ class NewProductListController extends GetxController {
     bool isSuccess = false;
     _inProgress = true;
     update();
-    final NetworkResponse response =
-    await Get.find<NetworkCaller>().getRequest(url: Url.productListByRemark('new'));
+    final NetworkResponse response = await Get.find<NetworkCaller>()
+        .getRequest(url: Url.productListByRemark('new'));
     if (response.isSuccess) {
       isSuccess = true;
       _errorMessage = null;
-      _productList = ProductsListModel.fromJson(response.responseData).productList ?? [];
+      _productList =
+          ProductsListModel.fromJson(response.responseData).productList ?? [];
     } else {
       _errorMessage = response.errorMessage;
     }

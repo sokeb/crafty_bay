@@ -16,13 +16,6 @@ class ProductListByRemarkScreen extends StatefulWidget {
 
 class _ProductListByRemarkScreenState extends State<ProductListByRemarkScreen> {
   @override
-  // void initState() {
-  //   super.initState();
-  //   Get.find<ProductListByCategoryController>()
-  //       .getProductByCategoryList(widget.category.id!);
-  // }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

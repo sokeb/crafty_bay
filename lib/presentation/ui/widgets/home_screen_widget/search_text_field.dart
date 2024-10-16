@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class SearchTextField extends StatelessWidget {
   const SearchTextField({
-    super.key, required this.searchTEController,
+    super.key,
+    required this.searchTEController,
   });
 
   final TextEditingController searchTEController;

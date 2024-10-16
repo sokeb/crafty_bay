@@ -17,7 +17,6 @@ class _HomeBannerSlider2State extends State<HomeBannerSlider2> {
   int _currentIndex = 0;
   Timer? _timer;
 
-
   @override
   void initState() {
     super.initState();
@@ -27,7 +26,7 @@ class _HomeBannerSlider2State extends State<HomeBannerSlider2> {
 
   void _startAutoSlide(int listLength) {
     _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-      if (_currentIndex < listLength+2) {
+      if (_currentIndex < listLength + 2) {
         _currentIndex++;
       } else {
         _currentIndex = 0;
@@ -84,13 +83,12 @@ class _HomeBannerSlider2State extends State<HomeBannerSlider2> {
             padding: const EdgeInsets.only(right: 5, left: 5),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: AppColors.themeColor,
-                image: DecorationImage(image: NetworkImage(
-                    sliderListController.sliders[index].image ?? ''),
-                  fit: BoxFit.fill
-                )
-              ),
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: AppColors.themeColor,
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          sliderListController.sliders[index].image ?? ''),
+                      fit: BoxFit.fill)),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: SizedBox(

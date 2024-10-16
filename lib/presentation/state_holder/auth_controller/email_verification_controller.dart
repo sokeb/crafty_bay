@@ -5,11 +5,14 @@ import 'package:get/get.dart';
 
 class EmailVerificationController extends GetxController {
   bool _isProgress = false;
-  String? _errorMessage ;
+  String? _errorMessage;
+
   String? _data;
 
   bool get inProgress => _isProgress;
+
   String? get errorMessage => _errorMessage;
+
   String? get data => _data;
 
   Future<bool> verifyEmail(String email) async {
@@ -19,11 +22,12 @@ class EmailVerificationController extends GetxController {
     final NetworkResponse response = await Get.find<NetworkCaller>()
         .getRequest(url: Url.emailVerification(email));
 
-    if(response.statusCode == 200 && response.responseData['msg'] == 'success'){
+    if (response.statusCode == 200 &&
+        response.responseData['msg'] == 'success') {
       _errorMessage = null;
       _data = response.responseData['data'];
       isSuccess = true;
-    }else{
+    } else {
       _errorMessage = response.errorMessage;
     }
     _isProgress = false;

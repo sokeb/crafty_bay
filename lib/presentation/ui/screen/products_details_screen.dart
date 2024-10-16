@@ -47,92 +47,91 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
       ),
       body: GetBuilder<ProductDetailsController>(
           builder: (productDetailsController) {
-            if (productDetailsController.inProgress) {
-              return const LoadingIndicator();
-            }
-            if (productDetailsController.errorMessage != null) {
-              return Center(
-                child: Text(productDetailsController.errorMessage!),
-              );
-            }
-            List<String> colors =  Get
-                .find<ProductDetailsController>()
-                .productDetails!
-                .color!
-                .split(',');
-            List<String> sizes = Get
-                .find<ProductDetailsController>()
-                .productDetails!
-                .size!
-                .split(',');
-            _selectedColor = colors.first;
-            _selectedSize = sizes.first;
+        if (productDetailsController.inProgress) {
+          return const LoadingIndicator();
+        }
+        if (productDetailsController.errorMessage != null) {
+          return Center(
+            child: Text(productDetailsController.errorMessage!),
+          );
+        }
+        List<String> colors = Get.find<ProductDetailsController>()
+            .productDetails!
+            .color!
+            .split(',');
+        List<String> sizes = Get.find<ProductDetailsController>()
+            .productDetails!
+            .size!
+            .split(',');
+        _selectedColor = colors.first;
+        _selectedSize = sizes.first;
 
-            return Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        DetailsPageSlider(
-                          sliderImgUrls: [
-                            productDetailsController.productDetails!.img1!,
-                            productDetailsController.productDetails!.img2!,
-                            productDetailsController.productDetails!.img3!,
-                            productDetailsController.productDetails!.img4!,
-                          ],
-                        ),
-                        Padding(
-                          padding:
-                          const EdgeInsets.only(left: 16, right: 16, top: 8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              BuiltNameQuantityReviewSection(
-                                productDetails:
-                                productDetailsController.productDetails!,
-                                quantity: (quantity) {
-                                  _quantity = quantity;
-                                },),
-                              BuiltColorSelectSection(
-                                onSelectedColor: (color) {
-                                  _selectedColor = color;
-                                },
-                                color: colors,
-                              ),
-                              const SizedBox(height: 8),
-                              BuiltSizeSelectSection(
-                                sizes: sizes,
-                                onSelectedSize: (size) {
-                                  _selectedSize = size;
-                                },
-                              ),
-                              const SizedBox(height: 16),
-                              const Text('Description',
-                                  style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500)),
-                              const SizedBox(height: 8),
-                              Text(
-                                  productDetailsController
-                                      .productDetails!.product!.shortDes!,
-                                  style: const TextStyle(
-                                      color: Colors.black45,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400))
-                            ],
-                          ),
-                        ),
+        return Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    DetailsPageSlider(
+                      sliderImgUrls: [
+                        productDetailsController.productDetails!.img1!,
+                        productDetailsController.productDetails!.img2!,
+                        productDetailsController.productDetails!.img3!,
+                        productDetailsController.productDetails!.img4!,
                       ],
                     ),
-                  ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 16, right: 16, top: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          BuiltNameQuantityReviewSection(
+                            productDetails:
+                                productDetailsController.productDetails!,
+                            quantity: (quantity) {
+                              _quantity = quantity;
+                            },
+                          ),
+                          BuiltColorSelectSection(
+                            onSelectedColor: (color) {
+                              _selectedColor = color;
+                            },
+                            color: colors,
+                          ),
+                          const SizedBox(height: 8),
+                          BuiltSizeSelectSection(
+                            sizes: sizes,
+                            onSelectedSize: (size) {
+                              _selectedSize = size;
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          const Text('Description',
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500)),
+                          const SizedBox(height: 8),
+                          Text(
+                              productDetailsController
+                                  .productDetails!.product!.shortDes!,
+                              style: const TextStyle(
+                                  color: Colors.black45,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400))
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                buildTotalPriceAndAddToCartSection(
-                    productDetailsController.productDetails!.product!.price!)
-              ],
-            );
-          }),
+              ),
+            ),
+            buildTotalPriceAndAddToCartSection(
+                productDetailsController.productDetails!.product!.price!)
+          ],
+        );
+      }),
     );
   }
 
@@ -186,26 +185,25 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
     AuthController authController = Get.find<AuthController>();
     bool isLoggedIn = await authController.isLoggedInUser();
     if (isLoggedIn) {
-      bool isProfileCompleted =
-      await authController.isProfileCompleted();
+      bool isProfileCompleted = await authController.isProfileCompleted();
       if (isProfileCompleted) {
         //todo
         bool isAddedToCartList = await Get.find<CreateCartListController>()
-            .createCartList(productId: widget.productId,
-            color: _selectedColor,
-            size: _selectedSize,
-            qty: _quantity,
-            token: authController.token);
-        if(isAddedToCartList && mounted){
+            .createCartList(
+                productId: widget.productId,
+                color: _selectedColor,
+                size: _selectedSize,
+                qty: _quantity,
+                token: authController.token);
+        if (isAddedToCartList && mounted) {
           if (mounted) {
-            showSnackBar(context,
-                'Product added to the cart list', true);
+            showSnackBar(context, 'Product added to the cart list', true);
             return;
           }
-        }else{
+        } else {
           if (mounted) {
-            showSnackBar(context,
-                Get.find<CreateCartListController>().errorMessage!);
+            showSnackBar(
+                context, Get.find<CreateCartListController>().errorMessage!);
             return;
           }
         }
@@ -224,6 +222,4 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
       }
     }
   }
-
-
 }

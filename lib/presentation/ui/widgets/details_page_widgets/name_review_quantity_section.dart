@@ -86,7 +86,9 @@ class _BuiltNameQuantityReviewSectionState
               ),
               TextButton(
                   onPressed: () {
-                    Get.to(() => ReviewsScreen(productId: widget.productDetails.id!,));
+                    Get.to(() => ReviewsScreen(
+                          productId: widget.productDetails.id!,
+                        ));
                   },
                   child: const Text('Reviews',
                       style: TextStyle(
@@ -97,7 +99,7 @@ class _BuiltNameQuantityReviewSectionState
                 width: 16,
               ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   addToFavorite(widget.productDetails.id!);
                 },
                 child: Card(

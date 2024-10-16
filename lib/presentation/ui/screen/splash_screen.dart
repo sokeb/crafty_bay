@@ -11,12 +11,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-
   Future<void> _moveToTheNextPage() async {
     await Future.delayed(const Duration(seconds: 2));
     Get.off(() => const MainBottomNavScreen());
-    // Get.off(() => const EmailVerificationScreen());
   }
 
   @override
@@ -50,4 +47,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-

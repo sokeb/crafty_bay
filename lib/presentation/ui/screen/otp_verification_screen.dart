@@ -30,9 +30,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final OtpVerificationController otpController =
-  Get.find<OtpVerificationController>();
+      Get.find<OtpVerificationController>();
   final ReadProfileController readProfileController =
-  Get.find<ReadProfileController>();
+      Get.find<ReadProfileController>();
 
   @override
   void initState() {
@@ -118,37 +118,37 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       const SizedBox(height: 16),
                       timer.timeLeft == 0
                           ? const Text(
-                        'Your OTP Code is Expired',
-                        style: TextStyle(color: Colors.red),
-                      )
+                              'Your OTP Code is Expired',
+                              style: TextStyle(color: Colors.red),
+                            )
                           : RichText(
-                          text: TextSpan(
-                              style: Theme.of(context).textTheme.bodyLarge,
-                              text: 'This Code Will Expire in ',
-                              children: [
-                                TextSpan(
-                                    text: '${timer.timeLeft} s',
-                                    style: const TextStyle(
-                                        color: AppColors.themeColor))
-                              ])),
+                              text: TextSpan(
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                  text: 'This Code Will Expire in ',
+                                  children: [
+                                  TextSpan(
+                                      text: '${timer.timeLeft} s',
+                                      style: const TextStyle(
+                                          color: AppColors.themeColor))
+                                ])),
                       const SizedBox(height: 16),
                       timer.timeLeft == 0
                           ? TextButton(
-                          onPressed: () async {
-                            initiateTimer();
-                            bool res = await Get.find<
-                                EmailVerificationController>()
-                                .verifyEmail(widget.email);
-                            if (res) {
-                              initiateTimer();
-                            }
-                          },
-                          child: const Text(
-                            'Resent Code',
-                            style: TextStyle(color: AppColors.themeColor),
-                          ))
+                              onPressed: () async {
+                                initiateTimer();
+                                bool res = await Get.find<
+                                        EmailVerificationController>()
+                                    .verifyEmail(widget.email);
+                                if (res) {
+                                  initiateTimer();
+                                }
+                              },
+                              child: const Text(
+                                'Resent Code',
+                                style: TextStyle(color: AppColors.themeColor),
+                              ))
                           : const Text('Resent Code',
-                          style: TextStyle(color: Colors.grey)),
+                              style: TextStyle(color: Colors.grey)),
                     ],
                   );
                 })
@@ -166,7 +166,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       return;
     }
     bool isOtpValid =
-    await otpController.verifyOtp(widget.email, _otpTEController.text);
+        await otpController.verifyOtp(widget.email, _otpTEController.text);
 
     if (isOtpValid && mounted) {
       final bool isProfile = await readProfileController

@@ -21,14 +21,13 @@ class WishProductListController extends GetxController {
     bool isSuccess = false;
     _inProgress = true;
     update();
-    final NetworkResponse response =
-        await Get.find<NetworkCaller>().getRequest(url: Url.productWishList, token: token);
+    final NetworkResponse response = await Get.find<NetworkCaller>()
+        .getRequest(url: Url.productWishList, token: token);
     if (response.isSuccess) {
-      isSuccess = true;
       _errorMessage = null;
       _wishProductList =
-          WishProductModel.fromJson(response.responseData).productData ??
-              [];
+          WishProductModel.fromJson(response.responseData).productData ?? [];
+      isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;
     }

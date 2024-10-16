@@ -95,8 +95,8 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
         Get.find<ProductReviewController>().getReviewList(productId);
       });
       return;
-    }else{
-      if(mounted){
+    } else {
+      if (mounted) {
         showSnackBar(context, reviewController.errorMessage!);
         return;
       }

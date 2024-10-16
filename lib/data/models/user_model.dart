@@ -64,32 +64,32 @@ class UserModel {
     userId = int.parse(json['user_id'].toString());
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ?  User.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['cus_name'] = this.cusName;
-    data['cus_add'] = this.cusAdd;
-    data['cus_city'] = this.cusCity;
-    data['cus_state'] = this.cusState;
-    data['cus_postcode'] = this.cusPostcode;
-    data['cus_country'] = this.cusCountry;
-    data['cus_phone'] = this.cusPhone;
-    data['cus_fax'] = this.cusFax;
-    data['ship_name'] = this.shipName;
-    data['ship_add'] = this.shipAdd;
-    data['ship_city'] = this.shipCity;
-    data['ship_state'] = this.shipState;
-    data['ship_postcode'] = this.shipPostcode;
-    data['ship_country'] = this.shipCountry;
-    data['ship_phone'] = this.shipPhone;
-    data['user_id'] = this.userId;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    final Map<String, dynamic> data =  <String, dynamic>{};
+    data['id'] = id;
+    data['cus_name'] = cusName;
+    data['cus_add'] = cusAdd;
+    data['cus_city'] = cusCity;
+    data['cus_state'] = cusState;
+    data['cus_postcode'] = cusPostcode;
+    data['cus_country'] = cusCountry;
+    data['cus_phone'] = cusPhone;
+    data['cus_fax'] = cusFax;
+    data['ship_name'] = shipName;
+    data['ship_add'] = shipAdd;
+    data['ship_city'] = shipCity;
+    data['ship_state'] = shipState;
+    data['ship_postcode'] = shipPostcode;
+    data['ship_country'] = shipCountry;
+    data['ship_phone'] = shipPhone;
+    data['user_id'] = userId;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    if (user != null) {
+      data['user'] = user!.toJson();
     }
     return data;
   }

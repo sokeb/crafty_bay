@@ -5,8 +5,10 @@ import '../product_card.dart';
 
 class HorizontalProductListView extends StatelessWidget {
   const HorizontalProductListView({
-    super.key, required this.productList,
+    super.key,
+    required this.productList,
   });
+
   final List<ProductModel> productList;
 
   @override
@@ -16,7 +18,9 @@ class HorizontalProductListView extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return  ProductCard(products: productList[index],);
+          return ProductCard(
+            products: productList[index],
+          );
         },
         separatorBuilder: (_, __) => const SizedBox(width: 5),
         itemCount: productList.length,
