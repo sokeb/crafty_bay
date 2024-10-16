@@ -2,6 +2,7 @@ import 'package:crafty_bay_app/presentation/state_holder/categories_list_control
 import 'package:crafty_bay_app/presentation/state_holder/new_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/special_product_list_controller.dart';
+import 'package:crafty_bay_app/presentation/ui/screen/product_list_by_remark_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/assets_path.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
@@ -71,10 +72,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
         children: [
           SectionHeader(
               onTap: () {
-                // Get.to(() => ProductListScreen(
-                //       title: 'New',
-                //       productList: newProductListController.newProductList,
-                //     ));
+                Get.to(() => ProductListByRemarkScreen(
+                    productList: newProductListController.newProductList,
+                    name: "New"));
               },
               title: 'New'),
           Visibility(
@@ -96,11 +96,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
         children: [
           SectionHeader(
               onTap: () {
-                // Get.to(() => ProductListScreen(
-                //       title: 'Special',
-                //       productList:
-                //           specialProductListController.specialProductList,
-                //     ));
+                Get.to(() => ProductListByRemarkScreen(
+                    productList:
+                        specialProductListController.specialProductList,
+                    name: "Special"));
               },
               title: 'Special'),
           Visibility(
@@ -122,11 +121,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
         children: [
           SectionHeader(
               onTap: () {
-                // Get.to(() => ProductListScreen(
-                //       title: 'Popular',
-                //       productList:
-                //           popularProductListController.popularProductList,
-                //     ));
+                Get.to(() => ProductListByRemarkScreen(
+                    productList:
+                        popularProductListController.popularProductList,
+                    name: "Popular"));
               },
               title: 'Popular'),
           Visibility(

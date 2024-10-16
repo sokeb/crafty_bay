@@ -11,16 +11,16 @@ class CartListModel {
     if (json['data'] != null) {
       cartData = <CartDataModel>[];
       json['data'].forEach((v) {
-        cartData!.add(new CartDataModel.fromJson(v));
+        cartData!.add(CartDataModel.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['msg'] = this.msg;
-    if (this.cartData != null) {
-      data['data'] = this.cartData!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['msg'] = msg;
+    if (cartData != null) {
+      data['data'] = cartData!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -40,15 +40,15 @@ class CartDataModel {
 
   CartDataModel(
       {this.id,
-        this.userId,
-        this.productId,
-        this.color,
-        this.size,
-        this.qty,
-        this.price,
-        this.createdAt,
-        this.updatedAt,
-        this.productData});
+      this.userId,
+      this.productId,
+      this.color,
+      this.size,
+      this.qty,
+      this.price,
+      this.createdAt,
+      this.updatedAt,
+      this.productData});
 
   CartDataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -61,24 +61,23 @@ class CartDataModel {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     productData =
-    json['product'] != null ? new CartProduct.fromJson(json['product']) : null;
+        json['product'] != null ? CartProduct.fromJson(json['product']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['product_id'] = this.productId;
-    data['color'] = this.color;
-    data['size'] = this.size;
-    data['qty'] = this.qty;
-    data['price'] = this.price;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.productData != null) {
-      data['product'] = this.productData!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['product_id'] = productId;
+    data['color'] = color;
+    data['size'] = size;
+    data['qty'] = qty;
+    data['price'] = price;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    if (productData != null) {
+      data['product'] = productData!.toJson();
     }
     return data;
   }
 }
-
