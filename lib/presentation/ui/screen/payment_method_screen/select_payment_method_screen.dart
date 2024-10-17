@@ -3,7 +3,10 @@ import 'package:crafty_bay_app/presentation/state_holder/payment_method_controll
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../utils/app_color.dart';
+import '../../utils/app_color.dart';
+import 'card_banking.dart';
+import 'internet_banking.dart';
+import 'mobile_banking.dart';
 
 class PaymentMethodScreen extends StatefulWidget {
   const PaymentMethodScreen({super.key});
@@ -25,69 +28,76 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: const Icon(Icons.arrow_back_ios)),
-        title: const Text('Payment Methods'),
-      ),
-      body: GetBuilder<PaymentMethodController>(builder: (methodController) {
-        if (methodController.inProgress) {
-          return const LoadingIndicator();
-        }
+    return DefaultTabController(
+      length: 3,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: const Icon(Icons.arrow_back_ios)),
+            title: const Text('Payment Methods'),
+          ),
+          body:
+              GetBuilder<PaymentMethodController>(builder: (methodController) {
+            if (methodController.inProgress) {
+              return const LoadingIndicator();
+            }
 
-        if (methodController.paymentMethodData.isEmpty ||
-            methodController.paymentMethodData[0].paymentMethod == null) {
-          return const Center(child: Text('No payment methods available'));
-        }
+            if (methodController.paymentMethodData == null ||
+                methodController.paymentMethodData!.paymentMethod == null) {
+              return const Center(child: Text('No payment methods available'));
+            }
 
-        return Column(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GridView.builder(
-                  itemCount: methodController
-                      .paymentMethodData[0].paymentMethod!.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    childAspectRatio: 1,
-                    crossAxisSpacing: 8.0, // Updated spacing for better layout
+            return Column(
+              children: [
+                Expanded(
+                  flex: 8,
+                  child: TabBarView(
+                    children: [
+                      Banking(data: methodController.mobileBankingData),
+                      InternetBanking(
+                          data: methodController.internetBankingData),
+                      CartBanking(data: methodController.cardData),
+                    ],
                   ),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Get.to(() => ());
-                      },
-                      child: Card(
-                        child: Container(
-                          width: MediaQuery.sizeOf(context).width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.themeColor.withOpacity(0.1),
-                            image: DecorationImage(
-                              image: NetworkImage(methodController
-                                  .paymentMethodData[0]
-                                  .paymentMethod![index]
-                                  .logo!),
-                              fit: BoxFit
-                                  .scaleDown, // Updated fit for better scaling
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
                 ),
-              ),
-            ),
-            buildTotalPriceAndCheckoutSection(methodController)
-          ],
-        );
-      }),
+                Expanded(
+                    child: TabBar(
+                      indicatorColor: Theme.of(context).primaryColor,
+                      indicatorWeight: 0.7,
+                      dividerColor: Colors.white,
+                      
+                      automaticIndicatorColorAdjustment: true,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      labelColor: AppColors.themeColor,
+                      unselectedLabelColor: Colors.grey,
+                      labelStyle: const TextStyle(fontSize: 14),
+                      overlayColor: WidgetStateProperty.resolveWith<Color>((state) {
+                        return AppColors.themeColor;
+                      }),
+                      labelPadding: const EdgeInsets.all(2),
+                      splashBorderRadius: BorderRadius.circular(5),
+                      tabs:  const [
+                        Tab(
+                          text: "Mobile Banking",
+                        ),
+                        Tab(
+                          text: 'Internet Banking',
+                        ),
+                        Tab(
+                          text: "Card",
+                        )
+                      ],
+                    )),
+                buildTotalPriceAndCheckoutSection(methodController)
+              ],
+            );
+          }),
+        ),
+      ),
     );
   }
 
@@ -117,7 +127,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 const SizedBox(
                   height: 2,
                 ),
-                Text('\$${methodController.paymentMethodData[0].total}',
+                Text('\$${methodController.paymentMethodData!.total}',
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -135,7 +145,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 const SizedBox(
                   height: 2,
                 ),
-                Text('\$${methodController.paymentMethodData[0].vat}',
+                Text('\$${methodController.paymentMethodData!.vat}',
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -156,7 +166,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 const SizedBox(
                   height: 2,
                 ),
-                Text('\$${methodController.paymentMethodData[0].payable}',
+                Text('\$${methodController.paymentMethodData!.payable}',
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,

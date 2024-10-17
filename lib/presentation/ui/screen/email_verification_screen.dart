@@ -3,7 +3,7 @@ import 'package:crafty_bay_app/presentation/ui/widgets/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../utils/regX.dart';
+import '../../../utils/regx.dart';
 import '../../../utils/snack_bar_message.dart';
 import 'otp_verification_screen.dart';
 
