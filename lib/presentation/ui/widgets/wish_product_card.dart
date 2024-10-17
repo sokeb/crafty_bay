@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import '../../../data/models/wish_product_model.dart';
 import '../screen/products_details_screen.dart';
 import '../utils/app_color.dart';
-import '../utils/assets_path.dart';
 
 class WishProductCard extends StatefulWidget {
   const WishProductCard({
@@ -45,9 +44,9 @@ class _WishProductCardState extends State<WishProductCard> {
                       topRight: Radius.circular(8),
                     ),
                     color: AppColors.themeColor.withOpacity(0.1),
-                    image: const DecorationImage(
-                      image: AssetImage(AssetsPath.shoe1),
-                      fit: BoxFit.scaleDown,
+                    image: DecorationImage(
+                      image: NetworkImage(widget.productData.product!.image!),
+                      fit: BoxFit.fill,
                     )),
               ),
             ),

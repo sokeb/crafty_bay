@@ -1,5 +1,6 @@
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/cart_list_controller.dart';
+import 'package:crafty_bay_app/presentation/ui/screen/select_payment_method_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/unauthorized_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
@@ -113,7 +114,10 @@ class _CartScreenState extends State<CartScreen> {
             SizedBox(
               width: 130,
               child: ElevatedButton(
-                  onPressed: () {}, child: const Text('Checkout')),
+                  onPressed: () {
+                    Get.to(() => const PaymentMethodScreen());
+                  },
+                  child: const Text('Checkout')),
             )
           ],
         ),

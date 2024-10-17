@@ -1,5 +1,6 @@
 import 'package:crafty_bay_app/presentation/ui/widgets/product_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../data/models/product_model.dart';
 
 class ProductListByRemarkScreen extends StatefulWidget {
@@ -19,6 +20,11 @@ class _ProductListByRemarkScreenState extends State<ProductListByRemarkScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
         title: Text(widget.name),
       ),
       body: Padding(

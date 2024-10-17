@@ -10,6 +10,8 @@ class WishProductListController extends GetxController {
   String? _errorMessage;
 
   List<WishProductData> _wishProductList = [];
+  final List<int> _wishesIdList = [];
+  List<int> get wishesIdList => _wishesIdList;
 
   String? get errorMessage => _errorMessage;
 
@@ -24,9 +26,13 @@ class WishProductListController extends GetxController {
     final NetworkResponse response = await Get.find<NetworkCaller>()
         .getRequest(url: Url.productWishList, token: token);
     if (response.isSuccess) {
+      _wishesIdList.clear();
       _errorMessage = null;
       _wishProductList =
           WishProductModel.fromJson(response.responseData).productData ?? [];
+      for(WishProductData wishProductData in  _wishProductList){
+        _wishesIdList.add(wishProductData.productId!);
+      }
       isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;

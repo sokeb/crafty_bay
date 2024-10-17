@@ -1,11 +1,13 @@
 import 'package:crafty_bay_app/data/models/product_model.dart';
 import 'package:crafty_bay_app/presentation/state_holder/create_wish_list_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/wish_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/products_details_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/show_unauthorized_dialog.dart';
 import 'package:crafty_bay_app/utils/snack_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../state_holder/auth_controller/auth_controller.dart';
+import '../../state_holder/delete_wish_list_controller.dart';
 import '../utils/app_color.dart';
 
 class ProductCard extends StatefulWidget {
@@ -87,17 +89,24 @@ class _ProductCardState extends State<ProductCard> {
                       SizedBox(
                         height: 30,
                         width: 35,
-                        child: IconButton(
-                            onPressed: () {
-                              addToFavorite(widget.products.id!);
-                            },
-                            icon: const Center(
-                              child: Icon(
-                                Icons.favorite_border_outlined,
-                                color: AppColors.themeColor,
-                                size: 16,
-                              ),
-                            )),
+                        child: GetBuilder<WishProductListController>(
+                            builder: (wishController) {
+                          return IconButton(
+                              onPressed: () {
+                                addToFavorite(
+                                    widget.products.id!, wishController);
+                              },
+                              icon: Center(
+                                child: Icon(
+                                  wishController.wishesIdList
+                                          .contains(widget.products.id!)
+                                      ? Icons.favorite
+                                      : Icons.favorite_border_outlined,
+                                  color: AppColors.themeColor,
+                                  size: 16,
+                                ),
+                              ));
+                        }),
                       )
                     ],
                   ),
@@ -110,15 +119,25 @@ class _ProductCardState extends State<ProductCard> {
     );
   }
 
-  Future<void> addToFavorite(int productId) async {
+  Future<void> addToFavorite(
+      int productId, WishProductListController wishController) async {
     AuthController authController = Get.find<AuthController>();
     final isLoggedIn = await authController.isLoggedInUser();
     if (!isLoggedIn) {
       showUnauthorizedDialog();
       return;
-    } else if (isLoggedIn) {
+    }
+    if (isLoggedIn) {
+      if (wishController.wishesIdList.contains(productId) && mounted) {
+        await Get.find<DeleteWishListController>()
+            .deleteWishlist(productId, authController.token);
+        await wishController.getWishProductList(authController.token);
+        return;
+      }
       bool isAdded = await Get.find<CreateWishListController>()
           .createWishlist(productId, authController.token);
+
+      await wishController.getWishProductList(authController.token);
       if (isAdded && mounted) {
         showSnackBar(context, 'Product Added to the WishList', true);
         return;

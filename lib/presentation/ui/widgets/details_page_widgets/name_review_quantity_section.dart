@@ -6,6 +6,8 @@ import 'package:item_count_number_button/item_count_number_button.dart';
 import '../../../../utils/snack_bar_message.dart';
 import '../../../state_holder/auth_controller/auth_controller.dart';
 import '../../../state_holder/create_wish_list_controller.dart';
+import '../../../state_holder/delete_wish_list_controller.dart';
+import '../../../state_holder/wish_product_list_controller.dart';
 import '../../screen/reviews_screen.dart';
 import '../../utils/app_color.dart';
 import '../show_unauthorized_dialog.dart';
@@ -96,24 +98,29 @@ class _BuiltNameQuantityReviewSectionState
                           color: AppColors.themeColor,
                           fontSize: 15))),
               const SizedBox(
-                width: 16,
+                width: 6,
               ),
-              InkWell(
-                onTap: () {
-                  addToFavorite(widget.productDetails.id!);
-                },
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4)),
-                  child: const Padding(
-                    padding: EdgeInsets.all(2.0),
-                    child: Icon(
-                      Icons.favorite,
-                      color: AppColors.themeColor,
-                      size: 16,
-                    ),
-                  ),
-                ),
+              SizedBox(
+                height: 30,
+                width: 35,
+                child: GetBuilder<WishProductListController>(
+                    builder: (wishController) {
+                  return IconButton(
+                      onPressed: () {
+                        addToFavorite(
+                            widget.productDetails.id!, wishController);
+                      },
+                      icon: Center(
+                        child: Icon(
+                          wishController.wishesIdList
+                                  .contains(widget.productDetails.id!)
+                              ? Icons.favorite
+                              : Icons.favorite_border_outlined,
+                          color: AppColors.themeColor,
+                          size: 20,
+                        ),
+                      ));
+                }),
               )
             ],
           )
@@ -122,15 +129,25 @@ class _BuiltNameQuantityReviewSectionState
     );
   }
 
-  Future<void> addToFavorite(int productId) async {
+  Future<void> addToFavorite(
+      int productId, WishProductListController wishController) async {
     AuthController authController = Get.find<AuthController>();
     final isLoggedIn = await authController.isLoggedInUser();
     if (!isLoggedIn) {
       showUnauthorizedDialog();
       return;
-    } else if (isLoggedIn) {
+    }
+    if (isLoggedIn) {
+      if (wishController.wishesIdList.contains(productId) && mounted) {
+        await Get.find<DeleteWishListController>()
+            .deleteWishlist(productId, authController.token);
+        await wishController.getWishProductList(authController.token);
+        return;
+      }
       bool isAdded = await Get.find<CreateWishListController>()
           .createWishlist(productId, authController.token);
+
+      await wishController.getWishProductList(authController.token);
       if (isAdded && mounted) {
         showSnackBar(context, 'Product Added to the WishList', true);
         return;

@@ -187,7 +187,6 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
     if (isLoggedIn) {
       bool isProfileCompleted = await authController.isProfileCompleted();
       if (isProfileCompleted) {
-        //todo
         bool isAddedToCartList = await Get.find<CreateCartListController>()
             .createCartList(
                 productId: widget.productId,

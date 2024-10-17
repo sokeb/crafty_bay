@@ -1,3 +1,4 @@
+import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/bottom_navbar_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/new_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/product_list_controller.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 
 import '../../state_holder/categories_list_controller.dart';
 import '../../state_holder/slider_list_controller.dart';
+import '../../state_holder/wish_product_list_controller.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
   const MainBottomNavScreen({super.key});
@@ -40,6 +42,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
       Get.find<PopularProductListController>().getPopularProductList();
       Get.find<NewProductListController>().getNewProductList();
       Get.find<SpecialProductListController>().getSpecialProductList();
+      checkAuth();
     });
   }
 
@@ -80,5 +83,15 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
         ),
       );
     });
+  }
+
+  Future<void> checkAuth() async {
+    AuthController authController = Get.find<AuthController>();
+    if (await authController.isLoggedInUser()) {
+      await Get.find<WishProductListController>()
+          .getWishProductList(authController.token);
+      return;
+    }
+    return;
   }
 }
