@@ -1,8 +1,10 @@
 import 'package:crafty_bay_app/presentation/ui/screen/payment_method_screen/payment_method_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../data/models/payment_method_model.dart';
+import '../../../state_holder/web_view_controller.dart';
 
 class PaymentMethodsCard extends StatelessWidget {
   const PaymentMethodsCard({
@@ -25,8 +27,9 @@ class PaymentMethodsCard extends StatelessWidget {
         ),
         itemBuilder: (context, index) {
           return InkWell(
-            onTap: () {
-              Get.to(()=> WebViewStack(redirectGatewayURL: bankingData[index].redirectGatewayURL!));
+            onTap: (){
+              Get.find<PaymentWebViewController>().resetController();
+              Get.off(()=> WebViewStack(redirectGatewayURL: bankingData[index].redirectGatewayURL!));
             },
             child: Card(
               child: Container(

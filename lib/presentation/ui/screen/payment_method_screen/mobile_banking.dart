@@ -1,4 +1,4 @@
-import 'package:crafty_bay_app/presentation/ui/screen/payment_method_screen/payment_method_card.dart';
+import 'package:crafty_bay_app/presentation/ui/widgets/payment_widgets/payment_method_card.dart';
 import 'package:flutter/material.dart';
 import '../../../../data/models/payment_method_model.dart';
 

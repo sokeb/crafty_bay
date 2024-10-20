@@ -52,6 +52,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
       return Scaffold(
         body: _screen[_navbarController.selectedIndex],
         bottomNavigationBar: NavigationBar(
+          backgroundColor: Colors.white,
           selectedIndex: _navbarController.selectedIndex,
           onDestinationSelected: _navbarController.changeIndex,
           destinations: [
@@ -59,26 +60,26 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                 icon: Icon(Icons.home,
                     color: _navbarController.selectedIndex == 0
                         ? AppColors.themeColor
-                        : Colors.grey),
+                        : Colors.black54),
                 label: 'Home'),
             NavigationDestination(
                 icon: Icon(Icons.category,
                     color: _navbarController.selectedIndex == 1
                         ? AppColors.themeColor
-                        : Colors.grey),
+                        : Colors.black54),
                 label: 'category'),
             NavigationDestination(
                 icon: Icon(Icons.shopping_cart,
                     color: _navbarController.selectedIndex == 2
                         ? AppColors.themeColor
-                        : Colors.grey),
+                        : Colors.black54),
                 label: 'Cart'),
             NavigationDestination(
-                icon: Icon(Icons.favorite_border,
+                icon: Icon(Icons.favorite,
                     color: _navbarController.selectedIndex == 3
                         ? AppColors.themeColor
-                        : Colors.grey),
-                label: 'WishList'),
+                        : Colors.black54),
+                label: 'WishList',),
           ],
         ),
       );

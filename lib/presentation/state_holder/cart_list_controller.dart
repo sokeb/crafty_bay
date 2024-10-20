@@ -1,4 +1,5 @@
 import 'package:crafty_bay_app/data/models/cart_list_model.dart';
+import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:get/get.dart';
 import '../../data/models/network_response.dart';
 import '../../data/services/network_caller.dart';
@@ -88,5 +89,15 @@ class CartListController extends GetxController {
     }
     update();
     return isSuccess;
+  }
+
+  Future<void> removeAllCartProduct() async {
+    for (int i = 0; i < cartList.length; i++) {
+      await deleteCartProductList(cartList[i].productId!, Get.find<AuthController>().token
+      );
+    }
+    cartList.clear();
+    update();
+    return;
   }
 }

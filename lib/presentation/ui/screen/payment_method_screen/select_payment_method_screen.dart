@@ -66,32 +66,31 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 ),
                 Expanded(
                     child: TabBar(
-                      indicatorColor: Theme.of(context).primaryColor,
-                      indicatorWeight: 0.7,
-                      dividerColor: Colors.white,
-                      
-                      automaticIndicatorColorAdjustment: true,
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      labelColor: AppColors.themeColor,
-                      unselectedLabelColor: Colors.grey,
-                      labelStyle: const TextStyle(fontSize: 14),
-                      overlayColor: WidgetStateProperty.resolveWith<Color>((state) {
-                        return AppColors.themeColor;
-                      }),
-                      labelPadding: const EdgeInsets.all(2),
-                      splashBorderRadius: BorderRadius.circular(5),
-                      tabs:  const [
-                        Tab(
-                          text: "Mobile Banking",
-                        ),
-                        Tab(
-                          text: 'Internet Banking',
-                        ),
-                        Tab(
-                          text: "Card",
-                        )
-                      ],
-                    )),
+                  indicatorColor: Theme.of(context).primaryColor,
+                  indicatorWeight: 0.7,
+                  dividerColor: Colors.white,
+                  automaticIndicatorColorAdjustment: true,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  labelColor: AppColors.themeColor,
+                  unselectedLabelColor: Colors.grey,
+                  labelStyle: const TextStyle(fontSize: 14),
+                  overlayColor: WidgetStateProperty.resolveWith<Color>((state) {
+                    return AppColors.themeColor;
+                  }),
+                  labelPadding: const EdgeInsets.all(2),
+                  splashBorderRadius: BorderRadius.circular(5),
+                  tabs: const [
+                    Tab(
+                      text: "Mobile Banking",
+                    ),
+                    Tab(
+                      text: 'Internet Banking',
+                    ),
+                    Tab(
+                      text: "Card",
+                    )
+                  ],
+                )),
                 buildTotalPriceAndCheckoutSection(methodController)
               ],
             );

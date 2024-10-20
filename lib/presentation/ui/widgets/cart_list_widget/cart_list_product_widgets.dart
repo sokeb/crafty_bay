@@ -101,24 +101,24 @@ class _CartListProductCardState extends State<CartListProductCard> {
                           icon: const Icon(Icons.delete_outline)),
                       FittedBox(
                           child: ItemCount(
-                        color: AppColors.themeColor,
-                        initialValue: cartListController.quantity[productId]!,
-                        minValue: 1,
-                        maxValue: 5,
-                        decimalPlaces: 0,
-                        onChanged: (value) {
-                          int currentValue =
-                              cartListController.quantity[productId]!;
-                          if (currentValue > value) {
-                            cartListController.updateCard(productId, false);
-                            setState(() {});
-                          }
-                          if (currentValue < value) {
-                            cartListController.updateCard(productId, true);
-                            setState(() {});
-                          }
-                        },
-                      )),
+                            color: Colors.black12,
+                            initialValue: cartListController.quantity[productId]!,
+                            minValue: 1,
+                            maxValue: 5,
+                            decimalPlaces: 0,
+                            onChanged: (value) {
+                              int currentValue =
+                                  cartListController.quantity[productId]!;
+                              if (currentValue > value) {
+                                cartListController.updateCard(productId, false);
+                                setState(() {});
+                              }
+                              if (currentValue < value) {
+                                cartListController.updateCard(productId, true);
+                                setState(() {});
+                              }
+                            },
+                          )),
                     ],
                   ),
                 ))

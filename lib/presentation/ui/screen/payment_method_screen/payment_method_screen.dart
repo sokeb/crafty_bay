@@ -1,8 +1,16 @@
+import 'package:crafty_bay_app/presentation/state_holder/web_view_controller.dart';
+import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../widgets/payment_widgets/payment_updates.dart';
 
 class WebViewStack extends StatefulWidget {
   const WebViewStack({super.key, required this.redirectGatewayURL});
+
   final String redirectGatewayURL;
 
   @override
@@ -16,27 +24,6 @@ class _WebViewStackState extends State<WebViewStack> {
   @override
   void initState() {
     super.initState();
-    controller = WebViewController()
-      ..setNavigationDelegate(NavigationDelegate(
-        onPageStarted: (url) {
-          setState(() {
-            loadingPercentage = 0;
-          });
-        },
-        onProgress: (progress) {
-          setState(() {
-            loadingPercentage = progress;
-          });
-        },
-        onPageFinished: (url) {
-          setState(() {
-            loadingPercentage = 100;
-          });
-        },
-      ))
-      ..loadRequest(
-        Uri.parse(widget.redirectGatewayURL),
-      );
   }
 
   @override
@@ -45,19 +32,30 @@ class _WebViewStackState extends State<WebViewStack> {
       appBar: AppBar(
         title: const Text('Payment'),
       ),
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: WebViewWidget(
-              controller: controller,
-            ),
-          ),
-          if (loadingPercentage < 100)
-            LinearProgressIndicator(
-              value: loadingPercentage / 100.0,
-            ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GetBuilder<PaymentWebViewController>(builder: (controller) {
+          if (controller.isPaymentPending) {
+            return WebViewWidget(
+                controller:
+                    controller.configureController(widget.redirectGatewayURL));
+          }
+          if (controller.isPaymentSuccess) {
+            if(controller.isPaymentSuccess){
+              const LoadingIndicator();
+            }
+            return const PaymentStatus(
+              headerText: "payment Successful",
+              subtitleText: "thanks for oder with crafty bay ",
+              isSuccess: true,
+            );
+          }
+          return const PaymentStatus(
+            headerText: 'paymentFailure',
+            subtitleText: 'PpaymentFailureSubtitleText',
+            isSuccess: false,
+          );
+        }),
       ),
     );
   }

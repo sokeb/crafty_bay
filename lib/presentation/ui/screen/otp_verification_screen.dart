@@ -185,13 +185,13 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         }
       } else {
         if (mounted) {
-          showSnackBar(context, readProfileController.errorMessage!, true);
+          showSnackBar(context, readProfileController.errorMessage!);
           return;
         }
       }
     } else {
       if (mounted) {
-        showSnackBar(context, otpController.errorMessage!, true);
+        showSnackBar(context, otpController.errorMessage!);
         return;
       }
     }
