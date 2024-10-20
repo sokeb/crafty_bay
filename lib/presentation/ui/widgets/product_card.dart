@@ -3,7 +3,7 @@ import 'package:crafty_bay_app/presentation/state_holder/create_wish_list_contro
 import 'package:crafty_bay_app/presentation/state_holder/wish_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/products_details_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/show_unauthorized_dialog.dart';
-import 'package:crafty_bay_app/utils/snack_bar_message.dart';
+import 'package:crafty_bay_app/presentation/ui/widgets/snack_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../state_holder/auth_controller/auth_controller.dart';
@@ -97,11 +97,10 @@ class _ProductCardState extends State<ProductCard> {
                                     widget.products.id!, wishController);
                               },
                               icon: Center(
-                                child: Icon(
-                                  wishController.wishesIdList
-                                          .contains(widget.products.id!)
-                                      ? Icons.favorite
-                                      : Icons.favorite_border_outlined,
+                                child: Icon(wishController.wishesIdList
+                                    .contains(widget.products.id!)
+                                    ? Icons.favorite
+                                    : Icons.favorite_border_outlined,
                                   color: AppColors.themeColor,
                                   size: 16,
                                 ),
@@ -153,3 +152,5 @@ class _ProductCardState extends State<ProductCard> {
     }
   }
 }
+
+

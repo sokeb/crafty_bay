@@ -1,9 +1,9 @@
 import 'package:crafty_bay_app/presentation/ui/screen/unauthorized_screen.dart';
-import 'package:crafty_bay_app/presentation/ui/widgets/cart_list_widget/alternative_view.dart';
+import 'package:crafty_bay_app/presentation/ui/widgets/alternative_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import '../../../utils/snack_bar_message.dart';
+import '../widgets/snack_bar_message.dart';
 import '../../state_holder/auth_controller/auth_controller.dart';
 import '../../state_holder/bottom_navbar_controller.dart';
 import '../../state_holder/wish_product_list_controller.dart';

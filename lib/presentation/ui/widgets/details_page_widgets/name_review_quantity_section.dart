@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
-import '../../../../utils/snack_bar_message.dart';
+import '../snack_bar_message.dart';
 import '../../../state_holder/auth_controller/auth_controller.dart';
 import '../../../state_holder/create_wish_list_controller.dart';
 import '../../../state_holder/delete_wish_list_controller.dart';

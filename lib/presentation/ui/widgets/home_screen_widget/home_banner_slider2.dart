@@ -20,13 +20,12 @@ class _HomeBannerSlider2State extends State<HomeBannerSlider2> {
   @override
   void initState() {
     super.initState();
-    int x = Get.find<SliderListController>().sliders.length;
-    _startAutoSlide(x);
+    _startAutoSlide();
   }
 
-  void _startAutoSlide(int listLength) {
+  void _startAutoSlide() {
     _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-      if (_currentIndex < listLength + 2) {
+      if (_currentIndex < Get.find<SliderListController>().sliders.length -1) {
         _currentIndex++;
       } else {
         _currentIndex = 0;

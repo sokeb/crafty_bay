@@ -4,12 +4,12 @@ import 'package:crafty_bay_app/presentation/ui/screen/payment_method_screen/sele
 import 'package:crafty_bay_app/presentation/ui/screen/unauthorized_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
-import 'package:crafty_bay_app/utils/snack_bar_message.dart';
+import 'package:crafty_bay_app/presentation/ui/widgets/snack_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import '../../state_holder/bottom_navbar_controller.dart';
-import '../widgets/cart_list_widget/alternative_view.dart';
+import '../widgets/alternative_view.dart';
 import '../widgets/cart_list_widget/cart_list_product_widgets.dart';
 
 class CartScreen extends StatefulWidget {

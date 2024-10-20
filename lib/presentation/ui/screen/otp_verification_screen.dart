@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../../utils/regx.dart';
-import '../../../utils/snack_bar_message.dart';
+import '../widgets/snack_bar_message.dart';
 import '../../state_holder/auth_controller/countdown_timer.dart';
 import 'complete_profile_screen.dart';
 import 'main_bottom_nav_screen.dart';

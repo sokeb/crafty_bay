@@ -8,7 +8,7 @@ import 'package:crafty_bay_app/presentation/ui/widgets/details_page_widgets/buil
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../utils/snack_bar_message.dart';
+import '../widgets/snack_bar_message.dart';
 import '../utils/app_color.dart';
 import '../widgets/details_page_widgets/built_color_select_section.dart';
 import '../widgets/details_page_widgets/name_review_quantity_section.dart';
