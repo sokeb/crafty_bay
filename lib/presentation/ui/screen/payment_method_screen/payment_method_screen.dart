@@ -1,8 +1,6 @@
 import 'package:crafty_bay_app/presentation/state_holder/web_view_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -46,13 +44,13 @@ class _WebViewStackState extends State<WebViewStack> {
             }
             return const PaymentStatus(
               headerText: "payment Successful",
-              subtitleText: "thanks for oder with crafty bay ",
+              subtitleText: "Thanks for yor oder. the order confirmation has been sent to your email",
               isSuccess: true,
             );
           }
           return const PaymentStatus(
-            headerText: 'paymentFailure',
-            subtitleText: 'PpaymentFailureSubtitleText',
+            headerText: 'payment Failed',
+            subtitleText: 'Something went wrong! Please try go back and try again',
             isSuccess: false,
           );
         }),

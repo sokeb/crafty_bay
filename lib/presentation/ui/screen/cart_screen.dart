@@ -7,7 +7,9 @@ import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:crafty_bay_app/utils/snack_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import '../../state_holder/bottom_navbar_controller.dart';
+import '../widgets/cart_list_widget/alternative_view.dart';
 import '../widgets/cart_list_widget/cart_list_product_widgets.dart';
 
 class CartScreen extends StatefulWidget {
@@ -46,8 +48,14 @@ class _CartScreenState extends State<CartScreen> {
           } else if (cartListController.inProgress) {
             return const LoadingIndicator();
           } else if (cartListController.cartList.isEmpty) {
-            return const Center(
-              child: Text('Empty'),
+            return AlternativeView(
+              title: 'Empty Cart List',
+              content: Align(
+                alignment: const Alignment(1.5, 1),
+                child: SizedBox(
+                    height: 200,
+                    child: Lottie.asset("assets/lottie's/lottie1.json")),
+              ),
             );
           } else if (cartListController.errorMessage != null) {
             return Center(

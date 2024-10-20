@@ -40,6 +40,7 @@ dependencies:
   jwt_decoder: ^2.0.1
   shared_preferences: ^2.3.2
   webview_flutter: ^4.10.0
+  lottie: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +60,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/lottie's/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

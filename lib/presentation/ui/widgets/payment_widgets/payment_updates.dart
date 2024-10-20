@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class PaymentStatus extends StatelessWidget {
   final bool isSuccess;
@@ -12,44 +13,34 @@ class PaymentStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          width: size.width,
           child: Center(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Center(
-                  child: Icon(isSuccess ? Icons.done : Icons.sms_failed),
-                ),
-                Positioned(
-                  top: 120,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        textAlign: TextAlign.center,
-                        headerText,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            child: SizedBox(
+                height: 150,
+                child: Lottie.asset(
+                  isSuccess
+                      ? "assets/lottie's/done.json"
+                      : "assets/lottie's/lottie4.json",
+                  repeat: false,
+                )),
           ),
         ),
         Text(
-          subtitleText,
-          style: Theme.of(context).textTheme.bodyMedium,
+          textAlign: TextAlign.center,
+          headerText,
+          style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            subtitleText,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
         ),
         const SizedBox(height: 10),
       ],
