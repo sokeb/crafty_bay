@@ -1,17 +1,18 @@
-import 'package:crafty_bay_app/data/models/product_details_model.dart';
+import 'package:crafty_bay_app/data/models/product_data_model.dart';
 import 'package:get/get.dart';
 import '../../data/models/network_response.dart';
+import '../../data/models/product_details_model.dart';
 import '../../data/services/network_caller.dart';
 import '../../data/utils/url.dart';
 
 class ProductDetailsController extends GetxController {
   bool _inProgress = false;
-  ProductDetailsModel? _productDetails;
   String? _errorMessage;
+  List<ProductDataModel>? _data;
+
+  List<ProductDataModel>? get data => _data;
 
   String? get errorMessage => _errorMessage;
-
-  ProductDetailsModel? get productDetails => _productDetails;
 
   bool get inProgress => _inProgress;
 
@@ -21,11 +22,10 @@ class ProductDetailsController extends GetxController {
     update();
     final NetworkResponse response = await Get.find<NetworkCaller>()
         .getRequest(url: Url.productListById(productId));
-    if (response.isSuccess) {
+    if (response.isSuccess && response.responseData["msg"] == "success") {
       isSuccess = true;
       _errorMessage = null;
-      _productDetails =
-          ProductDetailsModel.fromJson(response.responseData["data"][0]);
+      _data = ProductDetailsModel.fromJson(response.responseData).data!;
     } else {
       _errorMessage = response.errorMessage;
     }

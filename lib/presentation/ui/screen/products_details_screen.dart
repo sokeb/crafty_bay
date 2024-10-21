@@ -58,14 +58,14 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
             child: Text(productDetailsController.errorMessage!),
           );
         }
-        List<String> colors = Get.find<ProductDetailsController>()
-            .productDetails!
-            .color!
-            .split(',');
-        List<String> sizes = Get.find<ProductDetailsController>()
-            .productDetails!
-            .size!
-            .split(',');
+        if (productDetailsController.data!.isEmpty) {
+          return const Center(
+            child: Text('Product details are not available'),
+          );
+        }
+        List<String> colors =
+            productDetailsController.data![0].color!.split(',');
+        List<String> sizes = productDetailsController.data![0].size!.split(',');
         _selectedColor = colors.first;
         _selectedSize = sizes.first;
 
@@ -77,10 +77,10 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                   children: [
                     DetailsPageSlider(
                       sliderImgUrls: [
-                        productDetailsController.productDetails!.img1!,
-                        productDetailsController.productDetails!.img2!,
-                        productDetailsController.productDetails!.img3!,
-                        productDetailsController.productDetails!.img4!,
+                        productDetailsController.data![0].img1!,
+                        productDetailsController.data![0].img2!,
+                        productDetailsController.data![0].img3!,
+                        productDetailsController.data![0].img4!,
                       ],
                     ),
                     Padding(
@@ -90,8 +90,7 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           BuiltNameQuantityReviewSection(
-                            productDetails:
-                                productDetailsController.productDetails!,
+                            productDetails: productDetailsController.data![0],
                             quantity: (quantity) {
                               _quantity = quantity;
                             },
@@ -118,7 +117,7 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                           const SizedBox(height: 8),
                           Text(
                               productDetailsController
-                                  .productDetails!.product!.shortDes!,
+                                  .data![0].product!.shortDes!,
                               style: const TextStyle(
                                   color: Colors.black45,
                                   fontSize: 14,
@@ -131,7 +130,7 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
               ),
             ),
             buildTotalPriceAndAddToCartSection(
-                productDetailsController.productDetails!.product!.price!)
+                productDetailsController.data![0].product!.price!)
           ],
         );
       }),

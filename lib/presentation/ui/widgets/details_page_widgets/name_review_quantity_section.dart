@@ -1,4 +1,4 @@
-import 'package:crafty_bay_app/data/models/product_details_model.dart';
+import 'package:crafty_bay_app/data/models/product_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
@@ -19,7 +19,7 @@ class BuiltNameQuantityReviewSection extends StatefulWidget {
     required this.quantity,
   });
 
-  final ProductDetailsModel productDetails;
+  final ProductDataModel productDetails;
   final Function(int) quantity;
 
   @override
