@@ -13,13 +13,16 @@ class AppbarIconButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: 16,
-      backgroundColor: Colors.grey.shade100,
-      child: Icon(
-        iconData,
-        color: AppColors.themeColor,
-        size: 18,
+    return InkWell(
+      onTap: onTap,
+      child: CircleAvatar(
+        radius: 16,
+        backgroundColor: Colors.grey.shade100,
+        child: Icon(
+          iconData,
+          color: AppColors.themeColor,
+          size: 18,
+        ),
       ),
     );
   }
