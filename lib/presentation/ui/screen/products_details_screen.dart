@@ -174,11 +174,8 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
               width: 130,
               child:
                   GetBuilder<CartListController>(builder: (cartListController) {
-                if (Get.find<AuthController>().token.isNotEmpty) {
-                  Get.find<CartListController>()
-                      .getCartProductList(Get.find<AuthController>().token);
-                }
-                if (cartListController.idList.contains(widget.productId)) {
+                if (Get.find<AuthController>().token.isNotEmpty &&
+                    cartListController.idList.contains(widget.productId)) {
                   return SvgPicture.asset(
                     AssetsPath.addedCart,
                     width: 50,
@@ -210,8 +207,10 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                 qty: _quantity,
                 token: authController.token);
         if (isAddedToCartList) {
+          Get.find<CartListController>()
+              .getCartProductList(Get.find<AuthController>().token);
           if (mounted) {
-            //showSnackBar(context, 'Product added to the cart list', true);
+            showSnackBar(context, 'Product added to the cart list', true);
             return;
           }
         } else {
