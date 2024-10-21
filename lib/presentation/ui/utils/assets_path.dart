@@ -6,4 +6,5 @@ class AssetsPath {
   static const String shoe1 = '$_images/shoe1.png';
   static const String unauthorized = '$_images/unauthorized.png';
   static const String mobileBanking = '$_images/mobile.png';
+  static const String addedCart = '$_images/added.svg';
 }

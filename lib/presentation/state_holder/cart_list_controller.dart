@@ -5,7 +5,6 @@ import '../../data/models/network_response.dart';
 import '../../data/services/network_caller.dart';
 import '../../data/utils/url.dart';
 
-
 class CartListController extends GetxController {
   bool _inProgress = false;
 
@@ -18,20 +17,26 @@ class CartListController extends GetxController {
   List<CartDataModel> _cartList = [];
 
   List<CartDataModel> get cartList => _cartList;
+
   int _totalBill = 0;
 
   int get totalBill => _totalBill;
 
   final Map<String, int> _quantity = {};
 
-  final Map<String, int> _productPrice = {};
-  final Map<String, int> _totalProductPrice = {};
-
   Map<String, int> get quantity => _quantity;
+
+  final Map<String, int> _productPrice = {};
 
   Map<String, int> get productPrice => _productPrice;
 
+  final Map<String, int> _totalProductPrice = {};
+
   Map<String, int> get totalProductPrice => _totalProductPrice;
+
+  final List<int> _idList = [];
+
+  List<int> get idList => _idList;
 
   Future<bool> getCartProductList(String token) async {
     bool isSuccess = false;
@@ -43,6 +48,7 @@ class CartListController extends GetxController {
       _errorMessage = null;
       _cartList = CartListModel.fromJson(response.responseData).cartData ?? [];
       _totalBill = 0;
+      _idList.clear();
       for (CartDataModel cartData in cartList) {
         _totalBill += int.parse(cartData.price!);
         _quantity[cartData.productData!.id.toString()] =
@@ -51,6 +57,7 @@ class CartListController extends GetxController {
             int.parse(cartData.price!);
         _productPrice[cartData.productData!.id.toString()] =
             (int.parse(cartData.price!) / int.parse(cartData.qty!)).round();
+        _idList.add(cartData.productData!.id!);
       }
       isSuccess = true;
     } else {
@@ -94,8 +101,8 @@ class CartListController extends GetxController {
 
   Future<void> removeAllCartProduct() async {
     for (int i = 0; i < cartList.length; i++) {
-      await deleteCartProductList(cartList[i].productId!, Get.find<AuthController>().token
-      );
+      await deleteCartProductList(
+          cartList[i].productId!, Get.find<AuthController>().token);
     }
     cartList.clear();
     update();

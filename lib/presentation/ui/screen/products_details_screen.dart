@@ -1,4 +1,5 @@
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/cart_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/create_cart_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/product_details_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/complete_profile_screen.dart';
@@ -7,7 +8,9 @@ import 'package:crafty_bay_app/presentation/ui/widgets/details_page_widgets/deta
 import 'package:crafty_bay_app/presentation/ui/widgets/details_page_widgets/built_size_select_section.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import '../utils/assets_path.dart';
 import '../widgets/snack_bar_message.dart';
 import '../utils/app_color.dart';
 import '../widgets/details_page_widgets/built_color_select_section.dart';
@@ -138,7 +141,7 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
   Widget buildTotalPriceAndAddToCartSection(String price) {
     return Container(
       decoration: BoxDecoration(
-          color: AppColors.themeColor.withOpacity(0.2),
+          color: AppColors.themeColor.withOpacity(0.1),
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(25),
             topRight: Radius.circular(25),
@@ -170,10 +173,23 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
             ),
             SizedBox(
               width: 130,
-              child: ElevatedButton(
-                onPressed: _onTapAddToCard,
-                child: const Text('Add To Cart'),
-              ),
+              child:
+                  GetBuilder<CartListController>(builder: (cartListController) {
+                if (Get.find<AuthController>().token.isNotEmpty) {
+                  Get.find<CartListController>()
+                      .getCartProductList(Get.find<AuthController>().token);
+                }
+                if (cartListController.idList.contains(widget.productId)) {
+                  return SvgPicture.asset(
+                    AssetsPath.addedCart,
+                    width: 50,
+                  );
+                }
+                return ElevatedButton(
+                  onPressed: _onTapAddToCard,
+                  child: const Text('Add To Cart'),
+                );
+              }),
             )
           ],
         ),
@@ -194,9 +210,9 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                 size: _selectedSize,
                 qty: _quantity,
                 token: authController.token);
-        if (isAddedToCartList && mounted) {
+        if (isAddedToCartList) {
           if (mounted) {
-            showSnackBar(context, 'Product added to the cart list', true);
+            //showSnackBar(context, 'Product added to the cart list', true);
             return;
           }
         } else {

@@ -42,46 +42,42 @@ class _WishListScreenState extends State<WishListScreen> {
         ),
         body: GetBuilder<WishProductListController>(
             builder: (wishProductListController) {
-              if (Get
-                  .find<AuthController>()
-                  .token
-                  .isEmpty) {
-                return const UnauthorizedScreen();
-              } else if (wishProductListController.inProgress) {
-                return const LoadingIndicator();
-              } else if (wishProductListController.wishProductList.isEmpty) {
-                return AlternativeView(title: 'Empty Wish LIst', content: Align(
+          if (Get.find<AuthController>().token.isEmpty) {
+            return const UnauthorizedScreen();
+          } else if (wishProductListController.inProgress) {
+            return const LoadingIndicator();
+          } else if (wishProductListController.wishProductList.isEmpty) {
+            return AlternativeView(
+                title: 'Empty Wish LIst',
+                content: Align(
                   alignment: const Alignment(1.5, 1),
                   child: SizedBox(
                       height: 200,
                       child: Lottie.asset("assets/lottie's/lottie1.json")),
                 ));
-                    } else
-                    if (wishProductListController.errorMessage != null)
-                {
-                  return Center(
-                    child: Text(wishProductListController.errorMessage ?? ''),
+          } else if (wishProductListController.errorMessage != null) {
+            return Center(
+              child: Text(wishProductListController.errorMessage ?? ''),
+            );
+          }
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GridView.builder(
+                itemCount: wishProductListController.wishProductList.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 0.8,
+                    crossAxisSpacing: 0.1),
+                itemBuilder: (context, product) {
+                  return FittedBox(
+                    child: WishProductCard(
+                      productData:
+                          wishProductListController.wishProductList[product],
+                    ),
                   );
-                }
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GridView.builder(
-                      itemCount: wishProductListController.wishProductList
-                          .length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          childAspectRatio: 0.8,
-                          crossAxisSpacing: 0.1),
-                      itemBuilder: (context, product) {
-                        return FittedBox(
-                          child: WishProductCard(
-                            productData:
-                            wishProductListController.wishProductList[product],
-                          ),
-                        );
-                      }),
-                );
-              }),
+                }),
+          );
+        }),
       ),
     );
   }
@@ -89,7 +85,7 @@ class _WishListScreenState extends State<WishListScreen> {
   Future<void> getWishProductList() async {
     AuthController authController = Get.find<AuthController>();
     WishProductListController wishListController =
-    Get.find<WishProductListController>();
+        Get.find<WishProductListController>();
     if (await authController.isLoggedInUser() == false) {
       authController.setToken = "";
       authController.update();
@@ -103,7 +99,7 @@ class _WishListScreenState extends State<WishListScreen> {
       return;
     }
     bool status =
-    await wishListController.getWishProductList(authController.token);
+        await wishListController.getWishProductList(authController.token);
     if (mounted && !status) {
       showSnackBar(context, wishListController.errorMessage!);
     }

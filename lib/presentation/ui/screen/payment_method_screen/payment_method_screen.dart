@@ -39,18 +39,20 @@ class _WebViewStackState extends State<WebViewStack> {
                     controller.configureController(widget.redirectGatewayURL));
           }
           if (controller.isPaymentSuccess) {
-            if(controller.isPaymentSuccess){
+            if (controller.isPaymentSuccess) {
               const LoadingIndicator();
             }
             return const PaymentStatus(
               headerText: "payment Successful",
-              subtitleText: "Thanks for yor oder. the order confirmation has been sent to your email",
+              subtitleText:
+                  "Thanks for yor oder. the order confirmation has been sent to your email",
               isSuccess: true,
             );
           }
           return const PaymentStatus(
             headerText: 'payment Failed',
-            subtitleText: 'Something went wrong! Please try go back and try again',
+            subtitleText:
+                'Something went wrong! Please try go back and try again',
             isSuccess: false,
           );
         }),

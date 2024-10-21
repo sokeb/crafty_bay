@@ -121,7 +121,7 @@ class _CartScreenState extends State<CartScreen> {
             ),
             SizedBox(
               width: 130,
-              child: ElevatedButton(
+              child:ElevatedButton(
                   onPressed: () {
                     Get.to(() => const PaymentMethodScreen());
                   },
@@ -152,6 +152,8 @@ class _CartScreenState extends State<CartScreen> {
         await cartListController.getCartProductList(authController.token);
     if (mounted && !status) {
       showSnackBar(context, cartListController.errorMessage!);
+      return;
     }
+    return;
   }
 }
