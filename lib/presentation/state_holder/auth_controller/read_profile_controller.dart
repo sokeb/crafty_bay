@@ -51,4 +51,10 @@ class ReadProfileController extends GetxController {
     update();
     return isSuccess;
   }
+
+  void clearData(){
+    _userModel = null;
+    update();
+  }
+
 }

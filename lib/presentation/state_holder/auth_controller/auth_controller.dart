@@ -26,7 +26,10 @@ class AuthController extends GetxController {
   Future<bool> isLoggedInUser() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     String? token = localStorage.getString("token");
-    if (token == null || JwtDecoder.isExpired(token)) {
+    if (token!.isEmpty) {
+      return false;
+    }
+    if (token == '' || JwtDecoder.isExpired(token)) {
       return false;
     }
     _token = token;

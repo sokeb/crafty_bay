@@ -22,11 +22,18 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   final TextEditingController _mobileTEController = TextEditingController();
   final TextEditingController _cityTEController = TextEditingController();
   final TextEditingController _addressTEController = TextEditingController();
+  final TextEditingController _postcodeTEController = TextEditingController();
+  final TextEditingController _countryTEController = TextEditingController();
+  final TextEditingController _shipAddTEController = TextEditingController();
 
   final FocusNode _lastNameFocusNode = FocusNode();
   final FocusNode _mobileFocusNode = FocusNode();
   final FocusNode _cityFocusNode = FocusNode();
   final FocusNode _addressFocusNode = FocusNode();
+  final FocusNode _postcodeFocusNode = FocusNode();
+  final FocusNode _countryFocusNode = FocusNode();
+  final FocusNode _shipAddFocusNode = FocusNode();
+
 
   @override
   Widget build(BuildContext context) {
@@ -126,14 +133,49 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         decoration: const InputDecoration(hintText: 'City'),
                         onFieldSubmitted: (value) {
                           FocusScope.of(context)
-                              .requestFocus(_addressFocusNode);
+                              .requestFocus(_postcodeFocusNode);
                         },
                         validator: (city) {
                           if (city == null || city.isEmpty) {
                             return "This Field is required";
                           }
-                          if (!RegEx.alphabetRegEx.hasMatch(city)) {
-                            return 'Invalid';
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        focusNode: _postcodeFocusNode,
+                        maxLines: 4,
+                        keyboardType: TextInputType.text,
+                        controller: _postcodeTEController,
+                        decoration:
+                        const InputDecoration(hintText: 'Shipping Address'),
+                        onFieldSubmitted: (value) {
+                          FocusScope.of(context)
+                              .requestFocus(_countryFocusNode);
+                        },
+                        validator: (address) {
+                          if (address == null || address.isEmpty) {
+                            return 'This flied is require';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        focusNode: _countryFocusNode,
+                        maxLines: 4,
+                        keyboardType: TextInputType.text,
+                        controller: _countryTEController,
+                        decoration:
+                        const InputDecoration(hintText: 'Shipping Address'),
+                        onFieldSubmitted: (value) {
+                          FocusScope.of(context)
+                              .requestFocus(_addressFocusNode);
+                        },
+                        validator: (address) {
+                          if (address == null || address.isEmpty) {
+                            return 'This flied is require';
                           }
                           return null;
                         },
@@ -146,6 +188,28 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         controller: _addressTEController,
                         decoration:
                             const InputDecoration(hintText: 'Shipping Address'),
+                          onFieldSubmitted: (value) {
+                            FocusScope.of(context)
+                                .requestFocus(_shipAddFocusNode);
+                          },
+                        validator: (address) {
+                          if (address == null || address.isEmpty) {
+                            return 'This flied is require';
+                          }
+                          if (!RegEx.addressRegEx.hasMatch(address)) {
+                            return 'Enter valid Address';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      TextFormField(
+                        focusNode: _shipAddFocusNode,
+                        maxLines: 4,
+                        keyboardType: TextInputType.text,
+                        controller: _shipAddTEController,
+                        decoration:
+                        const InputDecoration(hintText: 'Shipping Address'),
                         validator: (address) {
                           if (address == null || address.isEmpty) {
                             return 'This flied is require';
@@ -184,6 +248,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       city: _cityTEController.text,
       shippingAddress: _addressTEController.text,
       token: Get.find<AuthController>().token,
+      address: _addressTEController.text,
+      postcode: _postcodeTEController.text.trim(),
+      country: _countryTEController.text,
     );
     if (result) {
       Get.offAll(() => const MainBottomNavScreen());

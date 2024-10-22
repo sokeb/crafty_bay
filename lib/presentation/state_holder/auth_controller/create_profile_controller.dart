@@ -24,6 +24,9 @@ class CreateProfileController extends GetxController {
       required String lastName,
       required String mobile,
       required String city,
+        required String address,
+        required String postcode,
+        required String country,
       required String shippingAddress,
         required String token,
       }) async {
@@ -33,19 +36,19 @@ class CreateProfileController extends GetxController {
 
     Map<String, String> json = {
       "cus_name": "$firstName $lastName",
-      "cus_add": shippingAddress,
+      "cus_add": address,
       "cus_city": city,
       "cus_state": city,
-      "cus_postcode": "1207",
-      "cus_country": "Bangladesh",
+      "cus_postcode": postcode,
+      "cus_country": country,
       "cus_phone": mobile,
       "cus_fax": mobile,
       "ship_name": firstName + lastName,
       "ship_add": shippingAddress,
       "ship_city": city,
       "ship_state": city,
-      "ship_postcode": "1207",
-      "ship_country": "Bangladesh",
+      "ship_postcode": postcode,
+      "ship_country": country,
       "ship_phone": mobile
     };
 
