@@ -23,6 +23,8 @@ class ProfileInfoScreenState extends State<ProfileInfoScreen> {
   final TextEditingController _shipAddressController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -60,6 +62,7 @@ class ProfileInfoScreenState extends State<ProfileInfoScreen> {
             profileController.userModel!.shipAdd ?? '';
         _phoneController.text = profileController.userModel!.cusPhone ?? '';
         _addressController.text = profileController.userModel!.cusAdd ?? '';
+        _cityController.text = profileController.userModel!.cusCity ?? '';
 
         return Container(
           color: AppColors.themeColor.withOpacity(0.7),
@@ -140,7 +143,7 @@ class ProfileInfoScreenState extends State<ProfileInfoScreen> {
                         child: Column(
                           children: [
                             buildTextField(
-                              label: "first name",
+                              label: "Name",
                               controller: _firstNameController,
                               icon: Icons.person,
                             ),
@@ -149,6 +152,12 @@ class ProfileInfoScreenState extends State<ProfileInfoScreen> {
                               label: 'Phone Number',
                               controller: _phoneController,
                               icon: Icons.phone,
+                            ),
+                            const SizedBox(height: 16),
+                            buildTextField(
+                              label: 'City',
+                              controller: _cityController,
+                              icon: Icons.location_city_rounded,
                             ),
                             const SizedBox(height: 16),
                             buildTextField(

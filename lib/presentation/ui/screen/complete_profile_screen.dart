@@ -34,7 +34,6 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   final FocusNode _countryFocusNode = FocusNode();
   final FocusNode _shipAddFocusNode = FocusNode();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,11 +144,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       const SizedBox(height: 16),
                       TextFormField(
                         focusNode: _postcodeFocusNode,
-                        maxLines: 4,
                         keyboardType: TextInputType.text,
                         controller: _postcodeTEController,
                         decoration:
-                        const InputDecoration(hintText: 'Shipping Address'),
+                            const InputDecoration(hintText: 'Post Code'),
                         onFieldSubmitted: (value) {
                           FocusScope.of(context)
                               .requestFocus(_countryFocusNode);
@@ -164,11 +162,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       const SizedBox(height: 16),
                       TextFormField(
                         focusNode: _countryFocusNode,
-                        maxLines: 4,
                         keyboardType: TextInputType.text,
                         controller: _countryTEController,
-                        decoration:
-                        const InputDecoration(hintText: 'Shipping Address'),
+                        decoration: const InputDecoration(hintText: 'Country'),
                         onFieldSubmitted: (value) {
                           FocusScope.of(context)
                               .requestFocus(_addressFocusNode);
@@ -186,12 +182,11 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         maxLines: 4,
                         keyboardType: TextInputType.text,
                         controller: _addressTEController,
-                        decoration:
-                            const InputDecoration(hintText: 'Shipping Address'),
-                          onFieldSubmitted: (value) {
-                            FocusScope.of(context)
-                                .requestFocus(_shipAddFocusNode);
-                          },
+                        decoration: const InputDecoration(hintText: 'Address'),
+                        onFieldSubmitted: (value) {
+                          FocusScope.of(context)
+                              .requestFocus(_shipAddFocusNode);
+                        },
                         validator: (address) {
                           if (address == null || address.isEmpty) {
                             return 'This flied is require';
@@ -209,7 +204,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         keyboardType: TextInputType.text,
                         controller: _shipAddTEController,
                         decoration:
-                        const InputDecoration(hintText: 'Shipping Address'),
+                            const InputDecoration(hintText: 'Shipping Address'),
                         validator: (address) {
                           if (address == null || address.isEmpty) {
                             return 'This flied is require';
