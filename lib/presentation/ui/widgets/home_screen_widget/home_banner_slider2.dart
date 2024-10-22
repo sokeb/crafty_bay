@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:crafty_bay_app/presentation/ui/screen/products_details_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ class _HomeBannerSlider2State extends State<HomeBannerSlider2> {
 
   void _startAutoSlide() {
     _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-      if (_currentIndex < Get.find<SliderListController>().sliders.length -1) {
+      if (_currentIndex < Get.find<SliderListController>().sliders.length - 1) {
         _currentIndex++;
       } else {
         _currentIndex = 0;
@@ -114,7 +115,11 @@ class _HomeBannerSlider2State extends State<HomeBannerSlider2> {
                             backgroundColor: Colors.white,
                             foregroundColor: AppColors.themeColor,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(() => ProductsDetailsScreen(
+                                productId: sliderListController
+                                    .sliders[index].productId!));
+                          },
                           child: const Text('Buy Now'),
                         ),
                       )
