@@ -7,8 +7,6 @@ import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/snack_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../utils/assets_path.dart';
 
 class ProfileInfoScreen extends StatefulWidget {
@@ -30,9 +28,8 @@ class ProfileInfoScreenState extends State<ProfileInfoScreen> {
   @override
   void initState() {
     super.initState();
-      getProfileData();
+    getProfileData();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -282,11 +279,9 @@ class ProfileInfoScreenState extends State<ProfileInfoScreen> {
 
   Future<void> onPressLogOut() async {
     AuthController authController = Get.find<AuthController>();
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    localStorage.setString("token", '');
+    await authController.logout();
     bool isLoggedIn = await authController.isLoggedInUser();
-    if(!isLoggedIn && mounted){
-      Get.find<ReadProfileController>().clearData();
+    if (!isLoggedIn && mounted) {
       showSnackBar(context, 'LogOut');
     }
     return;

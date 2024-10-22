@@ -26,7 +26,7 @@ class WishProductListController extends GetxController {
     final NetworkResponse response = await Get.find<NetworkCaller>()
         .getRequest(url: Url.productWishList, token: token);
     if (response.isSuccess) {
-      _wishesIdList.clear();
+      clearList();
       _errorMessage = null;
       _wishProductList =
           WishProductModel.fromJson(response.responseData).productData ?? [];
@@ -41,4 +41,11 @@ class WishProductListController extends GetxController {
     update();
     return isSuccess;
   }
+
+
+  void clearList(){
+    _wishesIdList.clear();
+    update();
+  }
+
 }

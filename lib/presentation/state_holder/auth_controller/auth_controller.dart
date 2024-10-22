@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:crafty_bay_app/presentation/state_holder/auth_controller/read_profile_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/wish_product_list_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -50,4 +52,12 @@ class AuthController extends GetxController {
     localStorage.setString("userData", jsonEncode(userModel.toJson()));
     _userModel = userModel;
   }
+
+  Future<void> logout() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    localStorage.setString("token", '');
+    Get.find<ReadProfileController>().clearData();
+    Get.find<WishProductListController>().clearList();
+  }
+
 }
