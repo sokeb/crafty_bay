@@ -100,11 +100,11 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                             : Colors.black54),
                     label: 'Cart'),
                 NavigationDestination(
-                  icon: Icon(Icons.favorite,
+                  icon: Icon(Icons.card_giftcard_rounded,
                       color: _navbarController.selectedIndex == 3
                           ? AppColors.themeColor
                           : Colors.black54),
-                  label: 'WishList',
+                  label: 'Wish',
                 ),
               ],
             ),
