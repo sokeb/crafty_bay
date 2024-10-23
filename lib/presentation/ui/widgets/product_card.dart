@@ -128,17 +128,18 @@ class _ProductCardState extends State<ProductCard> {
     }
     if (isLoggedIn) {
       if (wishController.wishesIdList.contains(productId) && mounted) {
+        wishController.removeProduct(productId);
         await Get.find<DeleteWishListController>()
             .deleteWishlist(productId, authController.token);
         await wishController.getWishProductList(authController.token);
         return;
       }
+      wishController.addProduct(productId);
       bool isAdded = await Get.find<CreateWishListController>()
           .createWishlist(productId, authController.token);
 
       await wishController.getWishProductList(authController.token);
       if (isAdded && mounted) {
-        showSnackBar(context, 'Product Added to the WishList', true);
         return;
       } else {
         if (mounted) {

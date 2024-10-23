@@ -48,4 +48,20 @@ class WishProductListController extends GetxController {
     update();
   }
 
+  void removeProduct(int id){
+    if(_wishesIdList.contains(id)){
+      _wishesIdList.remove(id);
+      update();
+      return;
+    }
+    return;
+  }
+  void addProduct(int id){
+    if(!_wishesIdList.contains(id)){
+      _wishesIdList.add(id);
+      update();
+      return;
+    }
+    return;
+  }
 }
