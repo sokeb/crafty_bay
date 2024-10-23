@@ -1,7 +1,7 @@
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/bottom_navbar_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/new_product_list_controller.dart';
-import 'package:crafty_bay_app/presentation/state_holder/product_list_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/popular_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/special_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/cart_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/category_list_screen.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../state_holder/categories_list_controller.dart';
+import '../../state_holder/search_controller.dart';
 import '../../state_holder/slider_list_controller.dart';
 import '../../state_holder/wish_product_list_controller.dart';
 import '../widgets/snack_bar_message.dart';
@@ -43,6 +44,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
       Get.find<PopularProductListController>().getPopularProductList();
       Get.find<NewProductListController>().getNewProductList();
       Get.find<SpecialProductListController>().getSpecialProductList();
+      Get.find<SearchProductController>().getAllProductData();
       getWishProductList();
       checkAuth();
     });
@@ -74,7 +76,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
               topRight: Radius.circular(30),
             ),
             child: NavigationBar(
-              height: 70,
+              height: 75,
               backgroundColor: Colors.white,
               selectedIndex: _navbarController.selectedIndex,
               onDestinationSelected: _navbarController.changeIndex,

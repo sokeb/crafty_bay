@@ -1,6 +1,6 @@
 import 'package:crafty_bay_app/presentation/state_holder/categories_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/new_product_list_controller.dart';
-import 'package:crafty_bay_app/presentation/state_holder/product_list_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/popular_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/special_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/product_list_by_remark_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/profile_screen.dart';
@@ -13,7 +13,7 @@ import '../widgets/appbar_icon_button.dart';
 import '../widgets/categories_card.dart';
 import '../widgets/home_screen_widget/home_banner_slider2.dart';
 import '../widgets/home_screen_widget/horizontal_product_list_view.dart';
-import '../widgets/home_screen_widget/search_text_field.dart';
+import '../widgets/home_screen_widget/search_field.dart';
 import '../widgets/home_screen_widget/section_header.dart';
 import 'package:get/get.dart';
 
@@ -36,9 +36,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 8),
-                SearchTextField(
-                  searchTEController: TextEditingController(),
-                ),
+                const SearchField(),
                 const SizedBox(height: 8),
                 const SizedBox(
                   height: 150,

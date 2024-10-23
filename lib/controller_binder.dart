@@ -16,8 +16,9 @@ import 'package:crafty_bay_app/presentation/state_holder/new_product_list_contro
 import 'package:crafty_bay_app/presentation/state_holder/payment_method_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/product_list_by_category_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/product_details_controller.dart';
-import 'package:crafty_bay_app/presentation/state_holder/product_list_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/popular_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/product_review_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/search_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/slider_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/special_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/web_view_controller.dart';
@@ -53,5 +54,6 @@ class ControllerBinder extends Bindings{
     Get.put(DeleteWishListController());
     Get.put(PaymentMethodController());
     Get.put(PaymentWebViewController());
+    Get.put(SearchProductController());
   }
 }
