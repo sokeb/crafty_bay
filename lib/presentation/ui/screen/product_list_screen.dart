@@ -5,6 +5,8 @@ import 'package:crafty_bay_app/presentation/ui/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../utils/app_color.dart';
+
 class ProductListScreen extends StatefulWidget {
   const ProductListScreen({super.key, required this.category});
 
@@ -44,7 +46,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
           }
           if (productListByCategoryController.productList.isEmpty) {
             return const Center(
-              child: Text('No Product Available'),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error_outline, size: 40,color: AppColors.themeColor,),
+                  Text(' No Product available'),
+                ],
+              ),
             );
           }
 

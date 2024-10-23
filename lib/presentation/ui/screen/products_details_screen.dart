@@ -60,7 +60,13 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
         }
         if (productDetailsController.data!.isEmpty) {
           return const Center(
-            child: Text('Product details are not available'),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.error_outline, size: 40,color: AppColors.themeColor,),
+                Text('Product details are not available'),
+              ],
+            ),
           );
         }
         List<String> colors =
