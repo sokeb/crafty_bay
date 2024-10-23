@@ -21,7 +21,7 @@ class _WishListScreenState extends State<WishListScreen> {
   @override
   void initState() {
     super.initState();
-    getWishProductList();
+    // getWishProductList();
   }
 
   @override
@@ -86,11 +86,13 @@ class _WishListScreenState extends State<WishListScreen> {
     AuthController authController = Get.find<AuthController>();
     WishProductListController wishListController =
         Get.find<WishProductListController>();
+
     if (await authController.isLoggedInUser() == false) {
       authController.setToken = "";
       authController.update();
       return;
     }
+
     if (wishListController.wishProductList.isNotEmpty) {
       await wishListController.getWishProductList(authController.token);
       return;

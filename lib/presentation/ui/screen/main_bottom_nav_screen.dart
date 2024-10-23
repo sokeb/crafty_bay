@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import '../../state_holder/categories_list_controller.dart';
 import '../../state_holder/slider_list_controller.dart';
 import '../../state_holder/wish_product_list_controller.dart';
+import '../widgets/snack_bar_message.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
   const MainBottomNavScreen({super.key});
@@ -42,6 +43,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
       Get.find<PopularProductListController>().getPopularProductList();
       Get.find<NewProductListController>().getNewProductList();
       Get.find<SpecialProductListController>().getSpecialProductList();
+      getWishProductList();
       checkAuth();
     });
   }
@@ -95,4 +97,30 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     }
     return;
   }
+
+  Future<void> getWishProductList() async {
+    AuthController authController = Get.find<AuthController>();
+    WishProductListController wishListController =
+    Get.find<WishProductListController>();
+
+    if (await authController.isLoggedInUser() == false) {
+      authController.setToken = "";
+      authController.update();
+      return;
+    }
+
+    if (wishListController.wishProductList.isNotEmpty) {
+      await wishListController.getWishProductList(authController.token);
+      return;
+    }
+    if (authController.token.isEmpty) {
+      return;
+    }
+    bool status =
+    await wishListController.getWishProductList(authController.token);
+    if (mounted && !status) {
+      showSnackBar(context, wishListController.errorMessage!);
+    }
+  }
+
 }

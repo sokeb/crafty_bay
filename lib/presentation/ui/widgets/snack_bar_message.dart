@@ -5,6 +5,7 @@ void showSnackBar(BuildContext context, String message,
     [bool isError = false]) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
+      duration:const Duration(seconds: 1),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20), // Rounded corners
       ),
