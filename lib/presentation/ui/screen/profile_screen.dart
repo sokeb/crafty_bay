@@ -1,5 +1,8 @@
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/read_profile_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/bottom_navbar_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/cart_list_controller.dart';
+import 'package:crafty_bay_app/presentation/state_holder/wish_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/profile_update_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/unauthorized_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
@@ -17,9 +20,6 @@ class ProfileInfoScreen extends StatefulWidget {
 }
 
 class ProfileInfoScreenState extends State<ProfileInfoScreen> {
-
-
-
   @override
   void initState() {
     super.initState();
@@ -30,7 +30,7 @@ class ProfileInfoScreenState extends State<ProfileInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Information'),
+        title: const Text('Profile'),
       ),
       body: GetBuilder<ReadProfileController>(builder: (profileController) {
         if (Get.find<AuthController>().token == '') {
@@ -49,72 +49,82 @@ class ProfileInfoScreenState extends State<ProfileInfoScreen> {
           return const Center(child: UnauthorizedScreen());
         }
 
-
-
         return Container(
-          color: AppColors.themeColor.withOpacity(0.7),
+          color: Colors.black.withOpacity(0.1),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 flex: 2,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Stack(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
                       children: [
-                        const CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 50,
-                          backgroundImage: AssetImage(
-                            AssetsPath.person,
-                          ),
-                          // Profile image
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: CircleAvatar(
-                            radius: 15,
-                            backgroundColor: Colors.white,
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.edit,
-                                color: Colors.blueAccent,
-                                size: 16,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 35,
+                              backgroundImage: AssetImage(
+                                AssetsPath.person,
                               ),
-                              onPressed: () {
-                                // Open camera/gallery to change profile pic
-                              },
+                              // Profile image
                             ),
-                          ),
+                            const SizedBox(width: 20),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  profileController.userModel!.cusName ?? '',
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                    profileController.userModel!.user!.email ??
+                                        '',
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w400)),
+                                Text(
+                                    "${profileController.userModel!.cusCity ?? ''}, ${profileController.userModel!.cusCountry ?? ''} ",
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w400)),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            buildProductDetails(
+                                Get.find<WishProductListController>()
+                                    .wishProductList
+                                    .length,
+                                'wish item',
+                                Icons.card_giftcard, () {
+                              Get.back();
+                              Get.find<BottomNavbarController>().changeIndex(3);
+                            }),
+                            buildProductDetails(
+                                Get.find<CartListController>().cartList.length,
+                                'item on your bucket',
+                                Icons.shopping_cart, () {
+                              Get.back();
+                              Get.find<BottomNavbarController>().changeIndex(2);
+                            }),
+                          ],
                         ),
                       ],
                     ),
-                    const SizedBox(width: 20),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          profileController.userModel!.cusName ?? '',
-                          style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(profileController.userModel!.user!.email ?? '',
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400)),
-                      ],
-                    ),
-                  ],
+                  ),
                 ),
               ),
               Expanded(
-                flex: 8,
+                flex: 10,
                 child: Container(
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -131,36 +141,50 @@ class ProfileInfoScreenState extends State<ProfileInfoScreen> {
                     ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              padding:
-                              const EdgeInsets.symmetric(vertical: 14),
-                              backgroundColor: Colors.redAccent,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Details',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(color: AppColors.themeColor)),
+                            TextButton(
+                                onPressed: () {
+                                  Get.to(() => ProfileUpdateScreen(
+                                      profileController: profileController));
+                                },
+                                child: const Text("Edit"))
+                          ],
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                detailsSection(
+                                    context,
+                                    profileController,
+                                    Icons.call,
+                                    profileController.userModel!.cusPhone ?? '',
+                                    'Mobile'),
+                                detailsSection(
+                                    context,
+                                    profileController,
+                                    Icons.local_shipping,
+                                    profileController.userModel!.shipAdd ?? '',
+                                    'Shipping Address'),
+                              ],
                             ),
-                            onPressed: () {
-                              Get.to(()=> ProfileUpdateScreen(profileController: profileController));
-                            },
-                            child: const Text('Update'),
                           ),
                         ),
-
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              padding:
-                              const EdgeInsets.symmetric(vertical: 14),
-                              backgroundColor: Colors.redAccent,
-                            ),
                             onPressed: () {
                               onPressLogOut();
                             },
@@ -179,6 +203,49 @@ class ProfileInfoScreenState extends State<ProfileInfoScreen> {
     );
   }
 
+  Widget buildProductDetails(
+      int num, String title, IconData icon, Function onTap) {
+    return Row(
+      children: [
+        TextButton(
+            onPressed: () {
+              onTap();
+            },
+            child: Row(
+              children: [
+                Icon(
+                  icon,
+                  color: AppColors.themeColor,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  '$num $title',
+                  style: const TextStyle(color: AppColors.themeColor),
+                )
+              ],
+            ))
+      ],
+    );
+  }
+
+  Widget detailsSection(
+      BuildContext context,
+      ReadProfileController profileController,
+      IconData icon,
+      String title,
+      String sub) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        size: 30,
+        color: Colors.black,
+      ),
+      title: Text(title,
+          style: const TextStyle(
+              fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold)),
+      subtitle: Text(sub),
+    );
+  }
 
   Future<void> getProfileData() async {
     AuthController authController = Get.find<AuthController>();
@@ -189,7 +256,6 @@ class ProfileInfoScreenState extends State<ProfileInfoScreen> {
     }
     return;
   }
-
 
   Future<void> onPressLogOut() async {
     AuthController authController = Get.find<AuthController>();
