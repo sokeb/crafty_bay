@@ -3,7 +3,7 @@ import 'package:crafty_bay_app/presentation/state_holder/auth_controller/read_pr
 import 'package:crafty_bay_app/presentation/state_holder/bottom_navbar_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/cart_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/wish_product_list_controller.dart';
-import 'package:crafty_bay_app/presentation/ui/screen/profile_update_screen.dart';
+import 'package:crafty_bay_app/presentation/ui/screen/update_profile_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/unauthorized_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';

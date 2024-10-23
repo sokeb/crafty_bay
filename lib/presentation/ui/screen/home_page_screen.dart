@@ -2,7 +2,7 @@ import 'package:crafty_bay_app/presentation/state_holder/categories_list_control
 import 'package:crafty_bay_app/presentation/state_holder/new_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/popular_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/special_product_list_controller.dart';
-import 'package:crafty_bay_app/presentation/ui/screen/product_list_by_remark_screen.dart';
+import 'package:crafty_bay_app/presentation/ui/screen/remark_product_list_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/profile_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/assets_path.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';

@@ -1,4 +1,5 @@
 import 'package:crafty_bay_app/presentation/ui/screen/unauthorized_screen.dart';
+import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +20,7 @@ class ProfileUpdateScreen extends StatefulWidget {
 class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _shipAddressController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
@@ -27,8 +28,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _firstNameController.text =
-        widget.profileController.userModel!.cusName ?? '';
+    _nameController.text = widget.profileController.userModel!.cusName ?? '';
     _shipAddressController.text =
         widget.profileController.userModel!.shipAdd ?? '';
     _phoneController.text = widget.profileController.userModel!.cusPhone ?? '';
@@ -52,7 +52,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                     children: [
                       buildTextField(
                         label: "Name",
-                        controller: _firstNameController,
+                        controller: _nameController,
                         icon: Icons.person,
                       ),
                       const SizedBox(height: 16),
@@ -87,17 +87,22 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
             const SizedBox(height: 30),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                ),
-                onPressed: () {
-                  updateProfile(widget.profileController);
-                },
-                child: const Text('Update Information'),
-              ),
+              child: GetBuilder<CreateProfileController>(builder: (context) {
+                return Visibility(
+                  visible: !context.inProgress,
+                  replacement: const LoadingIndicator(),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      onPressed: () {
+                        updateProfile(widget.profileController);
+                      },
+                      child: const Text('Update Information')),
+                );
+              }),
             ),
           ],
         ),
@@ -127,9 +132,21 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
 
   Future<void> updateProfile(ReadProfileController controller) async {
     AuthController authController = Get.find<AuthController>();
+    if (controller.userModel!.cusName! == _nameController.text &&
+        controller.userModel!.cusPhone! == _phoneController.text &&
+        controller.userModel!.cusAdd! == _addressController.text &&
+        controller.userModel!.cusCity! == _cityController.text &&
+        controller.userModel!.shipAdd! == _shipAddressController.text &&
+        mounted) {
+      showSnackBar(
+        context,
+        "You haven't change any information",
+      );
+      return;
+    }
     if (await authController.isLoggedInUser()) {
       bool isUpdated = await Get.find<CreateProfileController>().createProfile(
-        firstName: _firstNameController.text,
+        firstName: _nameController.text,
         lastName: '',
         mobile: _phoneController.text,
         city: controller.userModel!.cusCity!,
