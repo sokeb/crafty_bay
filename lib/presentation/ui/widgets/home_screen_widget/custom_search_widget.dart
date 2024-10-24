@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../data/models/product_model.dart';
+import '../../../../utils/app_string.dart';
 import '../../utils/app_color.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
@@ -15,7 +16,7 @@ class CustomSearchDelegate extends SearchDelegate {
     return [
       IconButton(
         onPressed: () {
-          query = '';
+          query = AppString.nullValue;
         },
         icon: const Icon(
           Icons.clear,
@@ -51,7 +52,7 @@ class CustomSearchDelegate extends SearchDelegate {
               size: 100,
               color: AppColors.themeColor,
             ),
-            Text("Search With Name"),
+            Text(AppString.searchWithName),
           ],
         ),
       );
@@ -73,7 +74,7 @@ class CustomSearchDelegate extends SearchDelegate {
               color: AppColors.themeColor,
             ),
           ),
-          Text("No match found"),
+          Text(AppString.noMatchFound),
         ],
       );
     }
@@ -93,7 +94,7 @@ class CustomSearchDelegate extends SearchDelegate {
             size: 100,
             color: AppColors.themeColor,
           ),
-          Text("Search With Name"),
+          Text(AppString.searchWithName),
         ],
       ),
     );

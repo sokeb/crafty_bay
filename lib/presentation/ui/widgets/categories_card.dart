@@ -1,5 +1,6 @@
 import 'package:crafty_bay_app/data/models/categories_model.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/product_list_screen.dart';
+import 'package:crafty_bay_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../utils/app_color.dart';
@@ -31,7 +32,7 @@ class CategoriesCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
                 image: DecorationImage(
                   image: NetworkImage(
-                    categories.categoryImg ?? '',
+                    categories.categoryImg ?? AppString.nullValue,
                   ),
                   fit: BoxFit.scaleDown,
                 )),
@@ -39,7 +40,7 @@ class CategoriesCard extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Text(
-          categories.categoryName ?? '',
+          categories.categoryName ?? AppString.nullValue,
           style: const TextStyle(color: AppColors.themeColor),
         )
       ],

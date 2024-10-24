@@ -5,7 +5,6 @@ import 'package:crafty_bay_app/presentation/ui/widgets/app_logo.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/snack_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../utils/regx.dart';
 
 class CompleteProfileScreen extends StatefulWidget {

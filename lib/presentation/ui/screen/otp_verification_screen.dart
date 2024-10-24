@@ -5,6 +5,7 @@ import 'package:crafty_bay_app/presentation/state_holder/auth_controller/otp_ver
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/read_profile_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/app_logo.dart';
+import 'package:crafty_bay_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -102,7 +103,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     appContext: context,
                   ),
                 ),
-                Text(invalidOTP ? "Invalid OTP" : ''),
+                Text(invalidOTP ? "Invalid OTP" : AppString.nullValue),
                 const SizedBox(height: 16),
                 GetBuilder<CountdownTimer>(builder: (timer) {
                   return Column(
@@ -144,10 +145,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                 }
                               },
                               child: const Text(
-                                'Resent Code',
+                                AppString.resentCode,
                                 style: TextStyle(color: AppColors.themeColor),
                               ))
-                          : const Text('Resent Code',
+                          : const Text(AppString.resentCode,
                               style: TextStyle(color: Colors.grey)),
                     ],
                   );

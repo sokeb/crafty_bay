@@ -1,8 +1,8 @@
 import 'package:crafty_bay_app/data/models/product_data_model.dart';
+import 'package:crafty_bay_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
-
 import '../snack_bar_message.dart';
 import '../../../state_holder/auth_controller/auth_controller.dart';
 import '../../../state_holder/create_wish_list_controller.dart';
@@ -149,7 +149,7 @@ class _BuiltNameQuantityReviewSectionState
 
       await wishController.getWishProductList(authController.token);
       if (isAdded && mounted) {
-        showSnackBar(context, 'Product Added to the WishList', true);
+        showSnackBar(context, AppString.addWishlistMessage, true);
         return;
       } else {
         if (mounted) {

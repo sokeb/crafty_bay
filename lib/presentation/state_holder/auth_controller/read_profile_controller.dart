@@ -4,7 +4,6 @@ import 'package:crafty_bay_app/data/utils/url.dart';
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../data/models/user_model.dart';
 
 class ReadProfileController extends GetxController {

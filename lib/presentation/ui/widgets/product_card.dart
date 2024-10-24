@@ -6,6 +6,7 @@ import 'package:crafty_bay_app/presentation/ui/widgets/show_unauthorized_dialog.
 import 'package:crafty_bay_app/presentation/ui/widgets/snack_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../utils/app_string.dart';
 import '../../state_holder/auth_controller/auth_controller.dart';
 import '../../state_holder/delete_wish_list_controller.dart';
 import '../utils/app_color.dart';
@@ -48,7 +49,7 @@ class _ProductCardState extends State<ProductCard> {
                     ),
                     color: AppColors.themeColor.withOpacity(0.1),
                     image: DecorationImage(
-                        image: NetworkImage(widget.products.image ?? ''),
+                        image: NetworkImage(widget.products.image ?? AppString.nullValue),
                         fit: BoxFit.fill)),
               ),
             ),
@@ -58,7 +59,7 @@ class _ProductCardState extends State<ProductCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.products.title ?? '',
+                    widget.products.title ?? AppString.nullValue,
                     maxLines: 1,
                     style: const TextStyle(
                         fontWeight: FontWeight.w600, color: Colors.black45),

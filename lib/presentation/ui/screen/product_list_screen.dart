@@ -50,7 +50,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.error_outline, size: 40,color: AppColors.themeColor,),
-                  Text(' No Product available'),
+                  Text('No Product available'),
                 ],
               ),
             );

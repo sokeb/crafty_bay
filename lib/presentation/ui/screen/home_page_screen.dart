@@ -6,6 +6,7 @@ import 'package:crafty_bay_app/presentation/ui/screen/remark_product_list_screen
 import 'package:crafty_bay_app/presentation/ui/screen/profile_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/assets_path.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/shimmer/card_shimmer.dart';
+import 'package:crafty_bay_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../state_holder/bottom_navbar_controller.dart';
@@ -75,9 +76,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
               onTap: () {
                 Get.to(() => ProductListByRemarkScreen(
                     productList: newProductListController.newProductList,
-                    name: "New"));
+                    name: AppString.nNew));
               },
-              title: 'New'),
+              title: AppString.nNew),
           Visibility(
             visible: !newProductListController.inProgress,
             replacement: const ShimmerGenerator(
@@ -107,9 +108,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 Get.to(() => ProductListByRemarkScreen(
                     productList:
                         specialProductListController.specialProductList,
-                    name: "Special"));
+                    name: AppString.special));
               },
-              title: 'Special'),
+              title: AppString.special),
           Visibility(
             visible: !specialProductListController.inProgress,
             replacement: const ShimmerGenerator(
@@ -138,9 +139,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
               onTap: () {
                 Get.to(() => ProductListByRemarkScreen(
                     productList: popularController.popularProductList,
-                    name: "Popular"));
+                    name: AppString.popular));
               },
-              title: 'Popular'),
+              title: AppString.popular),
           Visibility(
               visible: !popularController.inProgress,
               replacement: const ShimmerGenerator(

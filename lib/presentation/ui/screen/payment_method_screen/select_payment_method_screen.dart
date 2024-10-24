@@ -1,6 +1,7 @@
 import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/payment_method_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
+import 'package:crafty_bay_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../utils/app_color.dart';
@@ -38,7 +39,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                     Get.back();
                   },
                   icon: const Icon(Icons.arrow_back_ios)),
-              title: const Text('Select Payment Methods'),
+              title: const Text(AppString.payment),
             ),
             body: GetBuilder<PaymentMethodController>(
                 builder: (methodController) {
@@ -49,7 +50,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
               if (methodController.paymentMethodData == null ||
                   methodController.paymentMethodData!.paymentMethod == null) {
                 return const Center(
-                    child: Text('No payment methods available'));
+                    child: Text(AppString.noPaymentMethods));
               }
 
               return Column(
@@ -57,7 +58,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                   const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      'Tap on your favorite payment method to continue parches__',
+                      AppString.selectPaymentMethodsMsg,
                       style:
                           TextStyle(color: AppColors.themeColor, fontSize: 20),
                     ),
@@ -124,7 +125,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Total Price',
+                const Text(AppString.totalPrice,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -142,7 +143,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Vat',
+                const Text(AppString.vat,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -163,7 +164,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Payable',
+                const Text(AppString.payable,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,

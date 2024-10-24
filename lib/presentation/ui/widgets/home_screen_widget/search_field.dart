@@ -1,3 +1,4 @@
+import 'package:crafty_bay_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +34,7 @@ class SearchField extends StatelessWidget {
                   color: Colors.grey.shade700,
                 ),
                 Text(
-                  "Search",
+                  AppString.search,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 15,
                         color: Colors.grey,

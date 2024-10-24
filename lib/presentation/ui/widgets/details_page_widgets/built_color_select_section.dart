@@ -27,7 +27,7 @@ class _BuiltColorSelectSectionState extends State<BuiltColorSelectSection> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Size',
+            const Text('Color',
                 style: TextStyle(
                     color: Colors.black54,
                     fontSize: 20,

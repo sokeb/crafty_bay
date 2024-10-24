@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../../utils/app_string.dart';
 import '../../widgets/payment_widgets/payment_updates.dart';
 
 class WebViewStack extends StatefulWidget {
@@ -28,7 +29,7 @@ class _WebViewStackState extends State<WebViewStack> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Payment'),
+        title: const Text(AppString.payment),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -43,16 +44,16 @@ class _WebViewStackState extends State<WebViewStack> {
               const LoadingIndicator();
             }
             return const PaymentStatus(
-              headerText: "payment Successful",
+              headerText: AppString.paymentSuccess,
               subtitleText:
-                  "Thanks for yor oder. the order confirmation has been sent to your email",
+                  AppString.paymentSuccessMgs,
               isSuccess: true,
             );
           }
           return const PaymentStatus(
-            headerText: 'payment Failed',
+            headerText: AppString.paymentFail,
             subtitleText:
-                'Something went wrong! Please try go back and try again',
+                AppString.paymentFailedMsg,
             isSuccess: false,
           );
         }),

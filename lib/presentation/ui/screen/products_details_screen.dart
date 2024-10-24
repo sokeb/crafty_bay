@@ -7,6 +7,7 @@ import 'package:crafty_bay_app/presentation/ui/screen/email_verification_screen.
 import 'package:crafty_bay_app/presentation/ui/widgets/details_page_widgets/details_page_slider.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/details_page_widgets/built_size_select_section.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
+import 'package:crafty_bay_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -26,8 +27,8 @@ class ProductsDetailsScreen extends StatefulWidget {
 }
 
 class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
-  String _selectedColor = '';
-  String _selectedSize = '';
+  String _selectedColor = AppString.nullValue;
+  String _selectedSize = AppString.nullValue;
   int _quantity = 1;
 
   @override

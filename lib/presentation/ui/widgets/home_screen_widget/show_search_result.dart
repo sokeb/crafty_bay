@@ -2,6 +2,8 @@ import 'package:crafty_bay_app/presentation/ui/screen/products_details_screen.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../data/models/product_model.dart';
+import '../../../../utils/app_string.dart';
+import '../../utils/app_color.dart';
 
 class SearchResult extends StatelessWidget {
   final List<ProductModel> matchedQuery;
@@ -18,7 +20,11 @@ class SearchResult extends StatelessWidget {
             left: 10,
             top: 5,
           ),
-          child: Text("Matched Product: "),
+          child: Text(
+            AppString.matchedProduct,
+            style: TextStyle(
+                color: AppColors.themeColor, fontWeight: FontWeight.bold),
+          ),
         ),
         Expanded(
           child: ListView.separated(

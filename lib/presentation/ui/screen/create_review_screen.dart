@@ -2,6 +2,7 @@ import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_co
 import 'package:crafty_bay_app/presentation/state_holder/create_product_review_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/product_review_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/snack_bar_message.dart';
+import 'package:crafty_bay_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,7 +41,7 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
               TextFormField(
                 validator: (rating) {
                   if (rating == null || rating.isEmpty) {
-                    return 'This flied is require';
+                    return AppString.require;
                   }
                   return null;
                 },
@@ -54,7 +55,7 @@ class _CreateReviewScreenState extends State<CreateReviewScreen> {
               TextFormField(
                 validator: (review) {
                   if (review == null || review.isEmpty) {
-                    return 'This flied is require';
+                    return AppString.require;
                   }
                   return null;
                 },

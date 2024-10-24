@@ -2,6 +2,7 @@ import 'package:crafty_bay_app/presentation/state_holder/bottom_navbar_controlle
 import 'package:crafty_bay_app/presentation/state_holder/categories_list_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/categories_card.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
+import 'package:crafty_bay_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +28,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                 Get.find<BottomNavbarController>().selectHome();
               },
               icon: const Icon(Icons.arrow_back_ios)),
-          title: const Text('Categories'),
+          title: const Text(AppString.categories),
         ),
         body: RefreshIndicator(
           onRefresh: () async {

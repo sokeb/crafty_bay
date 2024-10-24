@@ -2,6 +2,7 @@ import 'package:crafty_bay_app/presentation/state_holder/auth_controller/auth_co
 import 'package:crafty_bay_app/presentation/state_holder/delete_wish_list_controller.dart';
 import 'package:crafty_bay_app/presentation/state_holder/wish_product_list_controller.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/snack_bar_message.dart';
+import 'package:crafty_bay_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/models/wish_product_model.dart';
@@ -122,7 +123,7 @@ class _WishProductCardState extends State<WishProductCard> {
         await deleteController.deleteWishlist(productId, authController.token);
 
     if (mounted && isDeleted) {
-      showSnackBar(context, 'Product deleted from wish list', true);
+      showSnackBar(context, AppString.wishListDeleteMsg, true);
        await Get.find<WishProductListController>()
           .getWishProductList(authController.token);
     } else {

@@ -4,6 +4,7 @@ import 'package:crafty_bay_app/presentation/ui/screen/payment_method_screen/sele
 import 'package:crafty_bay_app/presentation/ui/screen/unauthorized_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/snack_bar_message.dart';
+import 'package:crafty_bay_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -110,7 +111,7 @@ class _CartScreenState extends State<CartScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Total Price',
+                const Text(AppString.totalPrice,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
@@ -131,7 +132,7 @@ class _CartScreenState extends State<CartScreen> {
                   onPressed: () {
                     Get.to(() => const PaymentMethodScreen());
                   },
-                  child: const Text('Checkout')),
+                  child: const Text(AppString.checkout)),
             )
           ],
         ),
@@ -143,7 +144,7 @@ class _CartScreenState extends State<CartScreen> {
     AuthController authController = Get.find<AuthController>();
     CartListController cartListController = Get.find<CartListController>();
     if (await authController.isLoggedInUser() == false) {
-      authController.setToken = "";
+      authController.setToken = AppString.nullValue;
       authController.update();
       return;
     }

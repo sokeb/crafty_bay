@@ -1,6 +1,7 @@
 import 'package:crafty_bay_app/data/models/network_response.dart';
 import 'package:crafty_bay_app/data/services/network_caller.dart';
 import 'package:crafty_bay_app/data/utils/url.dart';
+import 'package:crafty_bay_app/utils/app_string.dart';
 import 'package:get/get.dart';
 
 class CreateProductReviewController extends GetxController {
@@ -36,7 +37,7 @@ class CreateProductReviewController extends GetxController {
       isSuccess = true;
     } else {
       _errorMessage =
-          response.errorMessage ?? "An error occurred. Please try again.";
+          response.errorMessage ?? AppString.errorTryAgain;
     }
     _isProgress = false;
     update();

@@ -15,10 +15,6 @@ class CreateProfileController extends GetxController {
 
   String? get errorMessage => _errorMessage;
 
-  // UserModel? _userModel;
-  //
-  // UserModel? get userModel => _userModel;
-
   Future<bool> createProfile(
       {required String firstName,
       required String lastName,
