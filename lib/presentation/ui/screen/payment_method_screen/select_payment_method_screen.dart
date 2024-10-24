@@ -32,70 +32,77 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
       length: 3,
       child: SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                onPressed: () {
-                  Get.back();
-                },
-                icon: const Icon(Icons.arrow_back_ios)),
-            title: const Text('Payment Methods'),
-          ),
-          body:
-              GetBuilder<PaymentMethodController>(builder: (methodController) {
-            if (methodController.inProgress) {
-              return const LoadingIndicator();
-            }
+            appBar: AppBar(
+              leading: IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: const Icon(Icons.arrow_back_ios)),
+              title: const Text('Select Payment Methods'),
+            ),
+            body: GetBuilder<PaymentMethodController>(
+                builder: (methodController) {
+              if (methodController.inProgress) {
+                return const LoadingIndicator();
+              }
 
-            if (methodController.paymentMethodData == null ||
-                methodController.paymentMethodData!.paymentMethod == null) {
-              return const Center(child: Text('No payment methods available'));
-            }
+              if (methodController.paymentMethodData == null ||
+                  methodController.paymentMethodData!.paymentMethod == null) {
+                return const Center(
+                    child: Text('No payment methods available'));
+              }
 
-            return Column(
-              children: [
-                Expanded(
-                  flex: 8,
-                  child: TabBarView(
-                    children: [
-                      Banking(data: methodController.mobileBankingData),
-                      InternetBanking(
-                          data: methodController.internetBankingData),
-                      CartBanking(data: methodController.cardData),
-                    ],
+              return Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Tap on your favorite payment method to continue parches__',
+                      style:
+                          TextStyle(color: AppColors.themeColor, fontSize: 20),
+                    ),
                   ),
-                ),
-                Expanded(
+                  Expanded(
+                    flex: 8,
+                    child: TabBarView(
+                      children: [
+                        Banking(data: methodController.mobileBankingData),
+                        InternetBanking(
+                            data: methodController.internetBankingData),
+                        CartBanking(data: methodController.cardData),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      child: SizedBox(
                     child: TabBar(
-                  indicatorColor: Theme.of(context).primaryColor,
-                  indicatorWeight: 0.7,
-                  dividerColor: Colors.white,
-                  automaticIndicatorColorAdjustment: true,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  labelColor: AppColors.themeColor,
-                  unselectedLabelColor: Colors.grey,
-                  labelStyle: const TextStyle(fontSize: 14),
-                  overlayColor: WidgetStateProperty.resolveWith<Color>((state) {
-                    return AppColors.themeColor;
-                  }),
-                  labelPadding: const EdgeInsets.all(2),
-                  splashBorderRadius: BorderRadius.circular(5),
-                  tabs: const [
-                    Tab(
-                      text: "Mobile Banking",
+                      indicatorColor: AppColors.themeColor,
+                      indicatorWeight: 5,
+                      dividerColor: Colors.white,
+                      automaticIndicatorColorAdjustment: true,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      labelColor: AppColors.themeColor,
+                      unselectedLabelColor: Colors.grey,
+                      labelStyle: const TextStyle(fontSize: 14),
+                      labelPadding: const EdgeInsets.all(2),
+                      splashBorderRadius: BorderRadius.circular(5),
+                      tabs: const [
+                        Tab(
+                          text: "Mobile Banking",
+                        ),
+                        Tab(
+                          text: 'Internet Banking',
+                        ),
+                        Tab(
+                          text: "Card",
+                        )
+                      ],
                     ),
-                    Tab(
-                      text: 'Internet Banking',
-                    ),
-                    Tab(
-                      text: "Card",
-                    )
-                  ],
-                )),
-                buildTotalPriceAndCheckoutSection(methodController)
-              ],
-            );
-          }),
-        ),
+                  )),
+                  buildTotalPriceAndCheckoutSection(methodController)
+                ],
+              );
+            })),
       ),
     );
   }
@@ -109,7 +116,6 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
             topLeft: Radius.circular(25),
             topRight: Radius.circular(25),
           )),
-      height: 150,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

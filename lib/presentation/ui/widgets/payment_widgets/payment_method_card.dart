@@ -19,9 +19,9 @@ class PaymentMethodsCard extends StatelessWidget {
       child: GridView.builder(
         itemCount: bankingData.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 5,
           childAspectRatio: 1,
-          crossAxisSpacing: 1.0, // Updated spacing for better layout
+          crossAxisSpacing: 2.0, // Updated spacing for better layout
         ),
         itemBuilder: (context, index) {
           return InkWell(

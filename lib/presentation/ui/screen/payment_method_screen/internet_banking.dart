@@ -10,7 +10,6 @@ class InternetBanking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PaymentMethodsCard(bankingData: data)    );
+    return Scaffold(body: PaymentMethodsCard(bankingData: data));
   }
 }
