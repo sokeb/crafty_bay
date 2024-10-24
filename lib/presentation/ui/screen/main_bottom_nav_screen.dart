@@ -10,7 +10,6 @@ import 'package:crafty_bay_app/presentation/ui/screen/wish_list_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../state_holder/categories_list_controller.dart';
 import '../../state_holder/search_controller.dart';
 import '../../state_holder/slider_list_controller.dart';
@@ -80,30 +79,34 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
               backgroundColor: Colors.white,
               selectedIndex: _navbarController.selectedIndex,
               onDestinationSelected: _navbarController.changeIndex,
-              destinations: [
+              destinations: const [
                 NavigationDestination(
-                    icon: Icon(Icons.home,
-                        color: _navbarController.selectedIndex == 0
-                            ? AppColors.themeColor
-                            : Colors.black54),
-                    label: 'Home'),
+                  icon: Icon(Icons.home_outlined),
+                  selectedIcon: Icon(Icons.home, color: AppColors.themeColor),
+                  label: 'Home',
+                ),
                 NavigationDestination(
-                    icon: Icon(Icons.category,
-                        color: _navbarController.selectedIndex == 1
-                            ? AppColors.themeColor
-                            : Colors.black54),
+                    icon: Icon(Icons.category_outlined),
+                    selectedIcon:
+                        Icon(Icons.category, color: AppColors.themeColor),
                     label: 'category'),
                 NavigationDestination(
-                    icon: Icon(Icons.shopping_cart,
-                        color: _navbarController.selectedIndex == 2
-                            ? AppColors.themeColor
-                            : Colors.black54),
+                    selectedIcon: Icon(
+                      Icons.shopping_cart,
+                      color: AppColors.themeColor,
+                    ),
+                    icon: Icon(
+                      Icons.shopping_cart_outlined,
+                    ),
                     label: 'Cart'),
                 NavigationDestination(
-                  icon: Icon(Icons.card_giftcard_rounded,
-                      color: _navbarController.selectedIndex == 3
-                          ? AppColors.themeColor
-                          : Colors.black54),
+                  icon: Icon(
+                    Icons.card_giftcard,
+                  ),
+                  selectedIcon: Icon(
+                    Icons.card_giftcard_rounded,
+                    color: AppColors.themeColor,
+                  ),
                   label: 'Wish',
                 ),
               ],
