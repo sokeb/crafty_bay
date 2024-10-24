@@ -55,7 +55,9 @@ class AuthController extends GetxController {
 
   Future<void> logout() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
-    localStorage.setString("token", '');
+    localStorage.clear();
+    _token = "";
+    //localStorage.setString("token", '');
     Get.find<ReadProfileController>().clearData();
     Get.find<WishProductListController>().clearList();
   }

@@ -5,7 +5,7 @@ import 'package:crafty_bay_app/presentation/state_holder/special_product_list_co
 import 'package:crafty_bay_app/presentation/ui/screen/remark_product_list_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/profile_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/assets_path.dart';
-import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
+import 'package:crafty_bay_app/presentation/ui/widgets/shimmer/card_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../state_holder/bottom_navbar_controller.dart';
@@ -16,6 +16,8 @@ import '../widgets/home_screen_widget/horizontal_product_list_view.dart';
 import '../widgets/home_screen_widget/search_field.dart';
 import '../widgets/home_screen_widget/section_header.dart';
 import 'package:get/get.dart';
+
+import '../widgets/shimmer/show_shimmer.dart';
 
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({super.key});
@@ -78,7 +80,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
               title: 'New'),
           Visibility(
             visible: !newProductListController.inProgress,
-            replacement: const LoadingIndicator(),
+            replacement: const ShimmerGenerator(
+              shimmer: CardViewShimmer(
+                width: 120,
+              ),
+              shimmerHeight: 150,
+              axis: Axis.horizontal,
+              itemCount: 4,
+            ),
             child: HorizontalProductListView(
               productList: newProductListController.newProductList,
             ),
@@ -103,7 +112,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
               title: 'Special'),
           Visibility(
             visible: !specialProductListController.inProgress,
-            replacement: const LoadingIndicator(),
+            replacement: const ShimmerGenerator(
+              shimmer: CardViewShimmer(
+                width: 120,
+              ),
+              shimmerHeight: 150,
+              axis: Axis.horizontal,
+              itemCount: 4,
+            ),
             child: HorizontalProductListView(
               productList: specialProductListController.specialProductList,
             ),
@@ -115,20 +131,28 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   Widget _buildPopularProductSection() {
     return GetBuilder<PopularProductListController>(
-        builder: (popularProductListController) {
+        builder: (popularController) {
       return Column(
         children: [
           SectionHeader(
               onTap: () {
                 Get.to(() => ProductListByRemarkScreen(
-                    productList:
-                        popularProductListController.popularProductList,
+                    productList: popularController.popularProductList,
                     name: "Popular"));
               },
               title: 'Popular'),
           Visibility(
+              visible: !popularController.inProgress,
+              replacement: const ShimmerGenerator(
+                shimmer: CardViewShimmer(
+                  width: 120,
+                ),
+                shimmerHeight: 150,
+                axis: Axis.horizontal,
+                itemCount: 4,
+              ),
               child: HorizontalProductListView(
-                  productList: popularProductListController.popularProductList))
+                  productList: popularController.popularProductList))
         ],
       );
     });
@@ -141,7 +165,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
           builder: (categoriesListController) {
         return Visibility(
           visible: !categoriesListController.inProgress,
-          replacement: const LoadingIndicator(),
+          replacement: const ShimmerGenerator(
+            shimmer: CardViewShimmer(
+              width: 90,
+            ),
+            shimmerHeight: 60,
+            axis: Axis.horizontal,
+            itemCount: 4,
+          ),
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
@@ -162,9 +193,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
       backgroundColor: Colors.white,
       title: SvgPicture.asset(AssetsPath.appbarLogo),
       actions: [
-        AppbarIconButtonWidget(onTap: () {
-          Get.to(()=> const ProfileInfoScreen());
-        }, iconData: Icons.person_2_outlined),
+        AppbarIconButtonWidget(
+            onTap: () {
+              Get.to(() => const ProfileInfoScreen());
+            },
+            iconData: Icons.person_2_outlined),
         const SizedBox(width: 8),
         AppbarIconButtonWidget(onTap: () {}, iconData: Icons.call_outlined),
         const SizedBox(width: 8),

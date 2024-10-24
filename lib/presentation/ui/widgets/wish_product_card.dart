@@ -123,7 +123,7 @@ class _WishProductCardState extends State<WishProductCard> {
 
     if (mounted && isDeleted) {
       showSnackBar(context, 'Product deleted from wish list', true);
-      await Get.find<WishProductListController>()
+       await Get.find<WishProductListController>()
           .getWishProductList(authController.token);
     } else {
       if (mounted) {

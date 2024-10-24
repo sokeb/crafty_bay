@@ -4,7 +4,8 @@ import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../state_holder/slider_list_controller.dart';
-import '../loading_widget.dart';
+import '../shimmer/show_shimmer.dart';
+import '../shimmer/slider_shimmer.dart';
 
 class HomeBannerSlider2 extends StatefulWidget {
   const HomeBannerSlider2({super.key});
@@ -53,7 +54,12 @@ class _HomeBannerSlider2State extends State<HomeBannerSlider2> {
       body: GetBuilder<SliderListController>(builder: (sliderListController) {
         return Visibility(
           visible: !sliderListController.inProgress,
-          replacement: const LoadingIndicator(),
+          replacement: const ShimmerGenerator(
+            shimmer: SliderShimmer(),
+            axis: Axis.horizontal,
+            itemCount: 1,
+            shimmerHeight: 150,
+          ),
           child: Column(
             children: [
               buildSliderPage(sliderListController),

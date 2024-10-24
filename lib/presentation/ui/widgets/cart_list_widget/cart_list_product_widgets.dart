@@ -22,13 +22,6 @@ class CartListProductCard extends StatefulWidget {
 class _CartListProductCardState extends State<CartListProductCard> {
   CartListController cartListController = Get.find<CartListController>();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   cartListController.productQuantities[widget.cartProduct.productData!.id!] =
-  //       int.parse(widget.cartProduct.qty!);
-  // }
-
   @override
   Widget build(BuildContext context) {
     String productId = widget.cartProduct.productData!.id.toString();

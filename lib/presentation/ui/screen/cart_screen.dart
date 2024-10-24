@@ -3,7 +3,6 @@ import 'package:crafty_bay_app/presentation/state_holder/cart_list_controller.da
 import 'package:crafty_bay_app/presentation/ui/screen/payment_method_screen/select_payment_method_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/screen/unauthorized_screen.dart';
 import 'package:crafty_bay_app/presentation/ui/utils/app_color.dart';
-import 'package:crafty_bay_app/presentation/ui/widgets/loading_widget.dart';
 import 'package:crafty_bay_app/presentation/ui/widgets/snack_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +10,8 @@ import 'package:lottie/lottie.dart';
 import '../../state_holder/bottom_navbar_controller.dart';
 import '../widgets/alternative_view.dart';
 import '../widgets/cart_list_widget/cart_list_product_widgets.dart';
+import '../widgets/shimmer/cart_screen_shimmer.dart';
+import '../widgets/shimmer/show_shimmer.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -46,7 +47,12 @@ class _CartScreenState extends State<CartScreen> {
           if (Get.find<AuthController>().token.isEmpty) {
             return const UnauthorizedScreen();
           } else if (cartListController.inProgress) {
-            return const LoadingIndicator();
+            return ShimmerGenerator(
+              shimmer: const CartScreenViewShimmer(),
+              shimmerHeight: MediaQuery.sizeOf(context).height,
+              axis: Axis.vertical,
+              itemCount: 8,
+            );
           } else if (cartListController.cartList.isEmpty) {
             return AlternativeView(
               title: 'Empty Cart List',
@@ -121,7 +127,7 @@ class _CartScreenState extends State<CartScreen> {
             ),
             SizedBox(
               width: 130,
-              child:ElevatedButton(
+              child: ElevatedButton(
                   onPressed: () {
                     Get.to(() => const PaymentMethodScreen());
                   },
